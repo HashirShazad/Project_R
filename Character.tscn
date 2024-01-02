@@ -39,4 +39,4 @@ skew = 0.000188589
 sprite_frames = SubResource("SpriteFrames_p301g")
 animation = &"Idle"
 autoplay = "Idle"
-frame_progress = 0.594014
+frame_progress = 0.0475797
