@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqtq8beg31vg0"]
+
+[ext_resource type="PackedScene" uid="uid://cva5hsb21d54f" path="res://Character.tscn" id="1_idtit"]
+[ext_resource type="PackedScene" uid="uid://sgoxcaixgh55" path="res://Box.tscn" id="2_3rykf"]
+
+[node name="Main" type="Node"]
+
+[node name="Character" parent="." instance=ExtResource("1_idtit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Box1" parent="." instance=ExtResource("2_3rykf")]
+
+[node name="Box2" parent="." instance=ExtResource("2_3rykf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="Box3" parent="." instance=ExtResource("2_3rykf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
+
+[node name="Box4" parent="." instance=ExtResource("2_3rykf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="Box5" parent="." instance=ExtResource("2_3rykf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 12.9879, 0)

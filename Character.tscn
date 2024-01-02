@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://cva5hsb21d54f"]
+
+[ext_resource type="Script" path="res://CharacterBody3D_Script.gd" id="1_4u8tq"]
+[ext_resource type="Texture2D" uid="uid://bxmqsavj2px8o" path="res://Idle/Idle1.png" id="2_dd0k7"]
+[ext_resource type="Texture2D" uid="uid://cfmfnq35021f2" path="res://Idle/Idle2.png" id="2_vn8yc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3yqod"]
+size = Vector3(0.240234, 0.328857, 0.219666)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p301g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dd0k7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vn8yc")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_s6bdm"]
+resource_name = "Idle"
+length = 0.25
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_chtla"]
+_data = {
+"Idle": SubResource("Animation_s6bdm")
+}
+
+[node name="Character" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("1_4u8tq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0729063, 0.237227, 0.0211487)
+shape = SubResource("BoxShape3D_3yqod")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="CharacterBody3D"]
+transform = Transform3D(2.96652, -0.00351156, -0.000622222, 0.00409007, 2.24043, 0.598164, -0.000749619, -1.67232, 0.801373, 0, 0.252831, 0)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_p301g")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.720299
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/AnimatedSprite3D"]
+transform = Transform3D(0.337095, -1.92813e-10, 2.99042e-09, 7.63976e-11, 0.357686, 7.00355e-07, 1.16415e-10, 5.96046e-08, 1, -0.0177097, 4.47035e-08, 1.31493)
+fov = 98.7
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_chtla")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
+advance_expression_base_node = NodePath("..")
