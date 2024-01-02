@@ -9,12 +9,7 @@ var g_multiplier = 1.2
 @onready var sprite = $AnimatedSprite2D
 
 func _physics_process(_delta):
-	# sprite flip
-	if velocity.x > 1:
-		sprite.flip_h = 0
-	elif velocity.x < -1:
-		sprite.flip_h = 1
-	
+
 	if Input.is_action_pressed("ui_left"):
 		velocity.x -= speed
 	if Input.is_action_pressed("ui_right"):
@@ -24,6 +19,19 @@ func _physics_process(_delta):
 	if Input.is_action_pressed("ui_down"):
 		velocity.y += speed
 	move_and_slide()
+	ani_player()
+
+func ani_player():
+	if velocity.y > 1:
+		sprite.play("Down")
+	elif velocity.y < -1:
+		sprite.play("Up")
+	elif velocity.x > 1:
+		sprite.play("Right")
+	elif velocity.x < -1:
+		sprite.play("Left")
+	
+	
 
 
 	
