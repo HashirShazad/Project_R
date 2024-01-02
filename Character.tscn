@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cva5hsb21d54f"]
+[gd_scene load_steps=25 format=3 uid="uid://cva5hsb21d54f"]
 
 [ext_resource type="Script" path="res://CharacterBody3D_Script.gd" id="1_4u8tq"]
 [ext_resource type="Texture2D" uid="uid://bxmqsavj2px8o" path="res://Idle/Idle1.png" id="2_dd0k7"]
@@ -7,6 +7,15 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ktbn"]
 size = Vector2(13, 15)
+
+[sub_resource type="Gradient" id="Gradient_j0k3u"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pylv1"]
+gradient = SubResource("Gradient_j0k3u")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bajlu"]
 atlas = ExtResource("4_qoinw")
@@ -93,6 +102,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_dd0k7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vn8yc")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_wejcu")
 }, {
 "duration": 1.0,
@@ -141,37 +161,27 @@ animations = [{
 "loop": true,
 "name": &"Up",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_dd0k7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_vn8yc")
-}],
-"loop": true,
-"name": &"new_animation",
-"speed": 5.0
 }]
 
-[node name="Character" type="Node2D"]
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_4u8tq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 2.5)
 shape = SubResource("RectangleShape2D_2ktbn")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+texture_filter = 1
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_pylv1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(2.38419e-07, 2)
 rotation = 0.00137874
+scale = Vector2(1, 1)
 skew = 0.000188589
 sprite_frames = SubResource("SpriteFrames_p301g")
-animation = &"new_animation"
+animation = &"Idle"
 autoplay = "Down"
-frame_progress = 0.491432
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-zoom = Vector2(3, 3)
