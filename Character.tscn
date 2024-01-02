@@ -1,9 +1,13 @@
-[gd_scene load_steps=25 format=3 uid="uid://cva5hsb21d54f"]
+[gd_scene load_steps=26 format=3 uid="uid://cva5hsb21d54f"]
 
 [ext_resource type="Script" path="res://CharacterBody3D_Script.gd" id="1_4u8tq"]
 [ext_resource type="Texture2D" uid="uid://bxmqsavj2px8o" path="res://Idle/Idle1.png" id="2_dd0k7"]
 [ext_resource type="Texture2D" uid="uid://cfmfnq35021f2" path="res://Idle/Idle2.png" id="2_vn8yc"]
 [ext_resource type="Texture2D" uid="uid://cjl85efnpgco6" path="res://gfx/character.png" id="4_qoinw"]
+
+[sub_resource type="Curve" id="Curve_uu2xp"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.251337, 0.516483), 0.0, 0.0, 0, 0, Vector2(1, 0.010989), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ktbn"]
 size = Vector2(13, 15)
@@ -166,12 +170,17 @@ animations = [{
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_4u8tq")
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_dd0k7")
+gravity = Vector2(0, 0)
+scale_amount_curve = SubResource("Curve_uu2xp")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 2.5)
 shape = SubResource("RectangleShape2D_2ktbn")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-visible = false
 texture_filter = 1
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_pylv1")

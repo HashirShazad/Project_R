@@ -41,7 +41,6 @@ func ani_player():
 		sprite.play("Right")
 	elif player_direction.x == -1:
 		sprite.play("Left")
-	print(player_direction)
 	
 	
 
