@@ -57,6 +57,14 @@ P2_Right={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Enviorment"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Enemy"
+2d_physics/layer_4="Projectile"
+2d_physics/layer_5="Bonus"
+
 [physics]
 
 2d/default_gravity=2500.0
