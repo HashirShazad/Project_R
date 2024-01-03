@@ -47,7 +47,6 @@ offset = 13
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2.90479, -2.74994)
 rotation = -0.811578
-scale = Vector2(1, 1)
 shape = SubResource("CircleShape2D_gvvv7")
 disabled = true
 
@@ -55,7 +54,6 @@ disabled = true
 texture_filter = 1
 position = Vector2(-2.17942, -2.06159)
 rotation = -0.811578
-scale = Vector2(1, 1)
 texture = ExtResource("1_3rhrn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
