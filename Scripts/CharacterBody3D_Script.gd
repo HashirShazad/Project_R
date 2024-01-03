@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 const ROCK : PackedScene = preload("res://Projectiles/Rock.tscn")
 const DAGGER : PackedScene = preload("res://Weapons/Dagger/dagger.tscn")
+const ARROW : PackedScene = preload("res://Projectiles/Arrow.tscn")
 
 @export var btn_up : StringName = "P1_Up"
 @export var btn_down : StringName  = "P1_Down"
@@ -76,6 +77,9 @@ func get_input():
 	if Input.is_action_just_pressed(btn_l_atk):
 		var atk_direction = self.global_position.direction_to(self.global_position + (2 * direction))
 		left_hand_attack(atk_direction)
+		is_stunned = true
+		await get_tree().create_timer(.2).timeout
+		is_stunned = false
 	
 	
 func ani_player(state : states):

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bs0dngsiy24av"]
+[gd_scene load_steps=8 format=3 uid="uid://bs0dngsiy24av"]
 
 [ext_resource type="Texture2D" uid="uid://ndhv8pdsj7el" path="res://Weapons/Dagger/dagger.png" id="1_3rhrn"]
 [ext_resource type="Script" path="res://Scripts/Hitbox.gd" id="2_i6lj8"]
+[ext_resource type="Texture2D" uid="uid://cicqpcyl6g6ar" path="res://Weapons/Dagger/dagger_smear.png" id="3_1bgn6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gvvv7"]
 radius = 3.0
@@ -28,42 +29,87 @@ tracks/1/path = NodePath("..:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [0.813175, 2.79253]
+"values": [-0.785398, 0.0, 2.79253]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Smear:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -12), Vector2(3, -6), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_u7wih"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -12)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_118qh"]
 _data = {
-"Atk": SubResource("Animation_pp813")
+"Atk": SubResource("Animation_pp813"),
+"RESET": SubResource("Animation_u7wih")
 }
 
 [node name="Dagger" type="Area2D"]
-rotation = 0.813175
+position = Vector2(0, -12)
+rotation = 2.79253
 script = ExtResource("2_i6lj8")
 offset = 13
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2.90479, -2.74994)
+position = Vector2(2.38419e-07, -4)
 rotation = -0.811578
 shape = SubResource("CircleShape2D_gvvv7")
+disabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Dagger" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-2.17942, -2.06159)
-rotation = -0.811578
+position = Vector2(0, -3)
 texture = ExtResource("1_3rhrn")
 
+[node name="Smear" type="Sprite2D" parent="Dagger"]
+visible = false
+texture_filter = 1
+position = Vector2(-3.00159, -0.995204)
+rotation = -1.5786
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_1bgn6")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Sprite2D")
+root_node = NodePath("../Dagger")
 libraries = {
 "": SubResource("AnimationLibrary_118qh")
 }
 autoplay = "Atk"
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.2
-autostart = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://dg44gmdflfvah"]
+
+[ext_resource type="Script" path="res://Scripts/Projectile_HitBox.gd" id="1_cns6m"]
+[ext_resource type="Texture2D" uid="uid://bsoj2vo7ju2lc" path="res://Projectiles/Arrow.png" id="2_4xt82"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fwouw"]
+radius = 3.99997
+height = 13.9999
+
+[node name="Arrow" type="Area2D"]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("1_cns6m")
+piercing = false
+damage = 10.0
+knock_back_value = 30
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6, 0)
+rotation = 1.57466
+shape = SubResource("CapsuleShape2D_fwouw")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture_filter = 1
+position = Vector2(-0.00773436, -1.99998)
+rotation = -0.00309755
+texture = ExtResource("2_4xt82")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

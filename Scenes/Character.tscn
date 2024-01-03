@@ -161,14 +161,16 @@ animations = [{
 size = Vector2(10, 14)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tymbv"]
-radius = 4.5
-height = 15.0
+radius = 5.0
+height = 10.0
 
 [node name="Character" type="CharacterBody2D"]
+y_sort_enabled = true
 collision_layer = 0
 script = ExtResource("1_4u8tq")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+y_sort_enabled = true
 texture_filter = 1
 texture = ExtResource("2_dd0k7")
 gravity = Vector2(0, 0)
@@ -183,25 +185,30 @@ texture = ExtResource("3_dwm21")
 texture_scale = 5.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player"]]
+y_sort_enabled = true
 texture_filter = 1
-position = Vector2(2.38419e-07, 2)
+position = Vector2(0, 8)
 rotation = 0.00137874
 skew = 0.000188589
 sprite_frames = SubResource("SpriteFrames_p301g")
 animation = &"Bite"
 autoplay = "Idle_Down"
 frame_progress = 0.305723
+offset = Vector2(0, -10)
 
-[node name="HurtBox" type="Area2D" parent="."]
+[node name="HurtBox" type="Area2D" parent="AnimatedSprite2D"]
+position = Vector2(-0.0188082, -12)
+rotation = -0.00137874
+skew = -0.000188589
 script = ExtResource("5_230r3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, 3)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HurtBox"]
+position = Vector2(4.65619e-09, 3)
 shape = SubResource("RectangleShape2D_rjvcf")
 debug_color = Color(0.92549, 0, 0.219608, 0.419608)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 2.5)
+position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_tymbv")
 
-[connection signal="area_entered" from="HurtBox" to="HurtBox" method="area_entered"]
+[connection signal="area_entered" from="AnimatedSprite2D/HurtBox" to="AnimatedSprite2D/HurtBox" method="area_entered"]
