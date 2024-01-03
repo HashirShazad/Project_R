@@ -9,30 +9,29 @@ radius = 3.0
 [sub_resource type="Animation" id="Animation_pp813"]
 resource_name = "Atk"
 length = 0.2
-loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
+tracks/0/path = NodePath("HitBox/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 0.258816),
-"update": 0,
-"values": [0.0, 3.49066]
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("..:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
+"update": 0,
+"values": [0.813175, 2.79253]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_118qh"]
@@ -41,10 +40,12 @@ _data = {
 }
 
 [node name="Dagger" type="Node2D"]
+rotation = 2.79253
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-rotation = 1.74533
+position = Vector2(-2.17942, -2.06159)
+rotation = -0.811578
 texture = ExtResource("1_3rhrn")
 
 [node name="HitBox" type="Area2D" parent="Sprite2D"]
@@ -53,6 +54,7 @@ script = ExtResource("2_i6lj8")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitBox"]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_gvvv7")
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {

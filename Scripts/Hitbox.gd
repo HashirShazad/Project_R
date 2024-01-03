@@ -13,5 +13,4 @@ func _init() -> void:
 
 
 func _on_animation_player_animation_finished(anim_name):
-	if anim_name == "Atk":
-		queue_free()
+	queue_free()

@@ -2,16 +2,19 @@ extends CharacterBody2D
 
 @export var ROCK : PackedScene = preload("res://Projectiles/Rock.tscn")
 @export var DAGGER : PackedScene = preload("res://Weapons/Dagger/dagger.tscn")
+
 @export var btn_up : StringName = "P1_Up"
 @export var btn_down : StringName  = "P1_Down"
 @export var btn_left : StringName = "P1_Left"
 @export var btn_right : StringName = "P1_Right"
 @export var btn_atk : StringName = "P1_Atk"
 
+enum weapon {right_hand, left_hand}
+var pixel_offset = 20
 var walk_speed = 200
 var speed = 100
 var friction = 16
-var direction :Vector2 = Vector2(0, 0)
+var direction :Vector2 = Vector2(0, -1)
 var max_mana : int = 30
 var mana : float 
 var max_health : int = 30
@@ -96,6 +99,6 @@ func attack(atk_direction):
 func throw(throw_direction, item):
 	var throwable = item.instantiate()
 	get_tree().current_scene.add_child(throwable)
-	throwable.global_position = self.global_position + 12 * direction
+	throwable.global_position = self.global_position + (pixel_offset * direction)
 	var throwable_rotation = throw_direction.angle()
 	throwable.rotation = throwable_rotation
