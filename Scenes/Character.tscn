@@ -9,8 +9,9 @@
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.251337, 0.516483), 0.0, 0.0, 0, 0, Vector2(1, 0.010989), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ktbn"]
-size = Vector2(13, 15)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tymbv"]
+radius = 4.5
+height = 15.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjis1"]
 atlas = ExtResource("4_1db2e")
@@ -123,7 +124,7 @@ scale_amount_curve = SubResource("Curve_uu2xp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 2.5)
-shape = SubResource("RectangleShape2D_2ktbn")
+shape = SubResource("CapsuleShape2D_tymbv")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 visible = false
