@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@export var ROCK : PackedScene = preload("res://Projectiles/Rock.tscn")
 @export var btn_up : StringName = "P1_Up"
 @export var btn_down : StringName  = "P1_Down"
 @export var btn_left : StringName = "P1_Left"
@@ -7,8 +8,8 @@ extends CharacterBody2D
 @export var btn_atk : StringName = "P1_Atk"
 
 var walk_speed = 200
-var speed = 150
-var friction = 10
+var speed = 100
+var friction = 16
 var direction :Vector2 = Vector2(0, 0)
 var max_mana : int = 30
 var mana : float 
@@ -37,8 +38,6 @@ func _physics_process(_delta):
 		
 
 func get_input():
-	if Input.is_action_just_pressed(btn_atk):
-		attack()
 	
 	var direction_x = Input.get_axis(btn_left, btn_right)
 	var direction_y = Input.get_axis(btn_up, btn_down)
@@ -55,6 +54,11 @@ func get_input():
 		velocity.y = direction_y * speed
 	else:
 		velocity.y = move_toward(velocity.y, 0, friction)
+		
+	if Input.is_action_just_pressed(btn_atk):
+		var atk_direction = self.global_position.direction_to(self.global_position + (2 * direction))
+		attack(atk_direction)
+	
 	
 func ani_player():
 	if direction.y == 1:
@@ -83,5 +87,14 @@ func take_damage(damage : int, knockback : int) -> void:
 	health = health - damage
 	print(health)
 
-func attack():
-	print("poyo")
+func attack(atk_direction):
+	if ROCK:
+		throw(atk_direction)
+		
+
+func throw(throw_direction):
+	var rock = ROCK.instantiate()
+	get_tree().current_scene.add_child(rock)
+	rock.global_position = self.global_position + 12 * direction
+	var rock_rotation = throw_direction.angle()
+	rock.rotation = rock_rotation
