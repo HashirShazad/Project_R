@@ -11,7 +11,6 @@ const DAGGER : PackedScene = preload("res://Weapons/Dagger/dagger.tscn")
 @export var btn_l_atk : StringName = "P1_L_Atk"
 
 enum states {Idle , Walking}
-
 var is_stunned : bool = 0
 var pixel_offset = 20
 var walk_speed = 200
@@ -34,19 +33,23 @@ func _ready():
 
 func _physics_process(_delta):
 	
-	if is_stunned != true:
+	if is_stunned:
+		pass
+	else:
 		get_input()
 		if stamina < 30:
 			stamina += _delta
 	
 		move_and_slide()
-	if velocity != Vector2(0, 0):
-		ani_player(states.Walking)
-	else:
-		ani_player(states.Idle)
+		if velocity != Vector2(0, 0):
+			ani_player(states.Walking)
+		else:
+			ani_player(states.Idle)
+		
 		
 func get_input():
-	
+	if is_stunned:
+		return
 	var direction_x = Input.get_axis(btn_left, btn_right)
 	var direction_y = Input.get_axis(btn_up, btn_down)
 	
@@ -66,6 +69,9 @@ func get_input():
 	if Input.is_action_just_pressed(btn_r_atk):
 		var atk_direction = self.global_position.direction_to(self.global_position + (2 * direction))
 		right_hand_attack(atk_direction)
+		is_stunned = true
+		await get_tree().create_timer(.1).timeout
+		is_stunned = false
 		
 	if Input.is_action_just_pressed(btn_l_atk):
 		var atk_direction = self.global_position.direction_to(self.global_position + (2 * direction))
@@ -122,7 +128,4 @@ func recieve_knock_back(damage_source_pos : Vector2, value : int):
 		var knock_back_direction = damage_source_pos.direction_to(self.global_position)
 		var knock_back = value * knock_back_direction
 		global_position += knock_back
-
-func _on_stun_calculator_timeout():
-	is_stunned = 0
-
+		

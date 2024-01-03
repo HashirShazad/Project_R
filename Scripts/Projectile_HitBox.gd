@@ -1,6 +1,6 @@
 extends HitBox
 class_name ProjectileHitBox
-@export var speed : int = 450
+@export var speed : int = 200
 @export var piercing : bool = 1
 
 
