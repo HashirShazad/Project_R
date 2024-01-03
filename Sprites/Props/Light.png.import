@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://df3eui7qn8ya2"
-path="res://.godot/imported/Tile_Sheet.png-d9f0ba7550866cf405d6898eae7a30f9.ctex"
+uid="uid://bwpnh1u0owqjx"
+path="res://.godot/imported/Light.png-48935bc69299a51563764af0808cad11.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tile_Sheet.png"
-dest_files=["res://.godot/imported/Tile_Sheet.png-d9f0ba7550866cf405d6898eae7a30f9.ctex"]
+source_file="res://Sprites/Props/Light.png"
+dest_files=["res://.godot/imported/Light.png-48935bc69299a51563764af0808cad11.ctex"]
 
 [params]
 

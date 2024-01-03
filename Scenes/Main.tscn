@@ -1,11 +1,11 @@
 [gd_scene load_steps=6 format=3 uid="uid://bqtq8beg31vg0"]
 
-[ext_resource type="Texture2D" uid="uid://dsak8el7tg0w1" path="res://gfx/Overworld.png" id="1_8e5mq"]
-[ext_resource type="PackedScene" uid="uid://cva5hsb21d54f" path="res://Character.tscn" id="1_idtit"]
-[ext_resource type="Script" path="res://Camera.gd" id="3_1vc8a"]
+[ext_resource type="Texture2D" uid="uid://dsak8el7tg0w1" path="res://gfx/Overworld.png" id="1_mq1wt"]
+[ext_resource type="PackedScene" uid="uid://cva5hsb21d54f" path="res://Scenes/Character.tscn" id="2_hpfrx"]
+[ext_resource type="Script" path="res://Scripts/Camera.gd" id="3_nf8gv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nnh6r"]
-texture = ExtResource("1_8e5mq")
+texture = ExtResource("1_mq1wt")
 use_texture_padding = false
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -3289,11 +3289,11 @@ layer_0/tile_data = PackedInt32Array(2293803, 196608, 11, 2031664, 196608, 11, 2
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0, 0, 0, 1)
 
-[node name="Character" parent="." instance=ExtResource("1_idtit")]
+[node name="Character" parent="." instance=ExtResource("2_hpfrx")]
 unique_name_in_owner = true
 position = Vector2(407, 178)
 
-[node name="Character2" parent="." instance=ExtResource("1_idtit")]
+[node name="Character2" parent="." instance=ExtResource("2_hpfrx")]
 unique_name_in_owner = true
 position = Vector2(361, 174)
 btn_up = &"P2_Up"
@@ -3304,4 +3304,4 @@ btn_right = &"P2_Right"
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
-script = ExtResource("3_1vc8a")
+script = ExtResource("3_nf8gv")

@@ -1,8 +1,9 @@
-[gd_scene load_steps=26 format=3 uid="uid://cva5hsb21d54f"]
+[gd_scene load_steps=25 format=3 uid="uid://cva5hsb21d54f"]
 
-[ext_resource type="Script" path="res://CharacterBody3D_Script.gd" id="1_4u8tq"]
+[ext_resource type="Script" path="res://Scripts/CharacterBody3D_Script.gd" id="1_4u8tq"]
 [ext_resource type="Texture2D" uid="uid://bxmqsavj2px8o" path="res://Idle/Idle1.png" id="2_dd0k7"]
 [ext_resource type="Texture2D" uid="uid://cfmfnq35021f2" path="res://Idle/Idle2.png" id="2_vn8yc"]
+[ext_resource type="Texture2D" uid="uid://bwpnh1u0owqjx" path="res://Sprites/Props/Light.png" id="3_dwm21"]
 [ext_resource type="Texture2D" uid="uid://cjl85efnpgco6" path="res://gfx/character.png" id="4_qoinw"]
 
 [sub_resource type="Curve" id="Curve_uu2xp"]
@@ -11,15 +12,6 @@ point_count = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ktbn"]
 size = Vector2(13, 15)
-
-[sub_resource type="Gradient" id="Gradient_j0k3u"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_pylv1"]
-gradient = SubResource("Gradient_j0k3u")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bajlu"]
 atlas = ExtResource("4_qoinw")
@@ -182,14 +174,15 @@ shape = SubResource("RectangleShape2D_2ktbn")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 texture_filter = 1
+blend_mode = 2
 shadow_enabled = true
-texture = SubResource("GradientTexture2D_pylv1")
+texture = ExtResource("3_dwm21")
+texture_scale = 5.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(2.38419e-07, 2)
 rotation = 0.00137874
-scale = Vector2(1, 1)
 skew = 0.000188589
 sprite_frames = SubResource("SpriteFrames_p301g")
 animation = &"Idle"
