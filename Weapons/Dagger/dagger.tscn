@@ -12,7 +12,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/0/path = NodePath("../CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -39,27 +39,34 @@ _data = {
 "Atk": SubResource("Animation_pp813")
 }
 
-[node name="Dagger" type="Node2D"]
+[node name="Dagger" type="Area2D"]
 rotation = 2.79253
+script = ExtResource("2_i6lj8")
+offset = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.90479, -2.74994)
+rotation = -0.811578
+scale = Vector2(1, 1)
+shape = SubResource("CircleShape2D_gvvv7")
+disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-2.17942, -2.06159)
 rotation = -0.811578
+scale = Vector2(1, 1)
 texture = ExtResource("1_3rhrn")
 
-[node name="HitBox" type="Area2D" parent="Sprite2D"]
-script = ExtResource("2_i6lj8")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitBox"]
-position = Vector2(0, -1)
-shape = SubResource("CircleShape2D_gvvv7")
-disabled = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
 libraries = {
 "": SubResource("AnimationLibrary_118qh")
 }
 autoplay = "Atk"
 
-[connection signal="animation_finished" from="Sprite2D/AnimationPlayer" to="Sprite2D/HitBox" method="_on_animation_player_animation_finished"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

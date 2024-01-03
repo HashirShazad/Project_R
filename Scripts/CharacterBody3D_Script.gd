@@ -1,15 +1,18 @@
 extends CharacterBody2D
 
-@export var ROCK : PackedScene = preload("res://Projectiles/Rock.tscn")
-@export var DAGGER : PackedScene = preload("res://Weapons/Dagger/dagger.tscn")
+const ROCK : PackedScene = preload("res://Projectiles/Rock.tscn")
+const DAGGER : PackedScene = preload("res://Weapons/Dagger/dagger.tscn")
 
 @export var btn_up : StringName = "P1_Up"
 @export var btn_down : StringName  = "P1_Down"
 @export var btn_left : StringName = "P1_Left"
 @export var btn_right : StringName = "P1_Right"
-@export var btn_atk : StringName = "P1_Atk"
+@export var btn_r_atk : StringName = "P1_R_Atk"
+@export var btn_l_atk : StringName = "P1_L_Atk"
 
-enum weapon {right_hand, left_hand}
+enum states {Idle , Walking}
+
+var is_stunned : bool = 0
 var pixel_offset = 20
 var walk_speed = 200
 var speed = 100
@@ -28,19 +31,20 @@ func _ready():
 	health = max_health
 	stamina = max_stamina
 	mana = max_mana
+
 func _physics_process(_delta):
 	
-	if health > 0:
+	if is_stunned != true:
 		get_input()
 		if stamina < 30:
 			stamina += _delta
 	
 		move_and_slide()
-		ani_player()
+	if velocity != Vector2(0, 0):
+		ani_player(states.Walking)
 	else:
-		is_dead = 1  
+		ani_player(states.Idle)
 		
-
 func get_input():
 	
 	var direction_x = Input.get_axis(btn_left, btn_right)
@@ -59,46 +63,66 @@ func get_input():
 	else:
 		velocity.y = move_toward(velocity.y, 0, friction)
 		
-	if Input.is_action_just_pressed(btn_atk):
+	if Input.is_action_just_pressed(btn_r_atk):
 		var atk_direction = self.global_position.direction_to(self.global_position + (2 * direction))
-		attack(atk_direction)
+		right_hand_attack(atk_direction)
+		
+	if Input.is_action_just_pressed(btn_l_atk):
+		var atk_direction = self.global_position.direction_to(self.global_position + (2 * direction))
+		left_hand_attack(atk_direction)
 	
 	
-func ani_player():
-	if direction.y == 1:
-		sprite.play("Idle_Down")
+func ani_player(state : states):
+	match state:
+		states.Idle:
+			if direction.y == 1:
+				sprite.play("Idle_Down")
+			elif direction.y == -1:
+				sprite.play("Idle_Up")
+			elif direction.x == 1:
+				sprite.flip_h = 0
+				sprite.play("Idle_Right")
+			elif direction.x == -1:
+				sprite.flip_h = 1
+				sprite.play("Idle_Right")
 		
-	elif direction.y == -1:
-		sprite.play("Idle_Up")
-		
-	elif direction.x == 1:
-		sprite.flip_h = 0
-		
-		if velocity.x > 20:
-			sprite.play("Walk_Right")
-		else:
-			sprite.play("Idle_Right")
-		
-	elif direction.x == -1:
-		sprite.flip_h = 1
-		
-		if velocity.x < -1:
-			sprite.play("Walk_Right")
-		else:
-			sprite.play("Idle_Right")
-		
+		states.Walking:
+			if direction.y == 1:
+				sprite.play("Idle_Down")
+			elif direction.y == -1:
+				sprite.play("Idle_Up")
+			elif direction.x == 1:
+				sprite.flip_h = 0
+				sprite.play("Walk_Right")
+			elif direction.x == -1:
+				sprite.flip_h = 1
+				sprite.play("Walk_Right")
+
 func take_damage(damage : int, knockback : int) -> void:
 	health = health - damage
 	print(health)
 
-func attack(atk_direction):
+func right_hand_attack(atk_direction):
 	if ROCK:
-		throw(atk_direction, ROCK)
-		
+		atk(atk_direction, ROCK,  pixel_offset)
 
-func throw(throw_direction, item):
+func left_hand_attack(atk_direction):
+	if DAGGER:
+		atk(atk_direction, DAGGER, 15)
+	
+func atk(throw_direction, item, offset):
 	var throwable = item.instantiate()
 	get_tree().current_scene.add_child(throwable)
-	throwable.global_position = self.global_position + (pixel_offset * direction)
+	throwable.global_position = self.global_position + (offset * direction)
 	var throwable_rotation = throw_direction.angle()
 	throwable.rotation = throwable_rotation
+
+func recieve_knock_back(damage_source_pos : Vector2, value : int):
+	if value != 0:
+		var knock_back_direction = damage_source_pos.direction_to(self.global_position)
+		var knock_back = value * knock_back_direction
+		global_position += knock_back
+
+func _on_stun_calculator_timeout():
+	is_stunned = 0
+

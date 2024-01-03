@@ -203,4 +203,8 @@ debug_color = Color(0.92549, 0, 0.219608, 0.419608)
 position = Vector2(-0.5, 2.5)
 shape = SubResource("CapsuleShape2D_tymbv")
 
+[node name="Stun_calculator" type="Timer" parent="."]
+wait_time = 0.3
+
 [connection signal="area_entered" from="HurtBox" to="HurtBox" method="area_entered"]
+[connection signal="timeout" from="Stun_calculator" to="." method="_on_stun_calculator_timeout"]
