@@ -162,7 +162,7 @@ size = Vector2(10, 14)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tymbv"]
 radius = 4.5
-height = 15.0
+height = 11.0
 
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_4u8tq")
@@ -189,7 +189,7 @@ skew = 0.000188589
 sprite_frames = SubResource("SpriteFrames_p301g")
 animation = &"Bite"
 autoplay = "Idle_Down"
-frame_progress = 0.305723
+frame_progress = 0.581703
 
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource("5_230r3")
@@ -202,5 +202,3 @@ debug_color = Color(0.92549, 0, 0.219608, 0.419608)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 2.5)
 shape = SubResource("CapsuleShape2D_tymbv")
-
-[connection signal="area_entered" from="HurtBox" to="HurtBox" method="area_entered"]

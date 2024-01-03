@@ -4,20 +4,41 @@ extends CharacterBody2D
 @export var btn_down : StringName  = "P1_Down"
 @export var btn_left : StringName = "P1_Left"
 @export var btn_right : StringName = "P1_Right"
+@export var btn_atk : StringName = "P1_Atk"
 
 var walk_speed = 200
 var speed = 150
-var jump_velocity = 4
 var friction = 10
-var g_multiplier = 1.2
 var direction :Vector2 = Vector2(0, 0)
-var mana : int = 30
-var health : int = 30
-var stamina : int = 30
-
+var max_mana : int = 30
+var mana : float 
+var max_health : int = 30
+var health : float
+var max_stamina : int = 30
+var stamina : float
+var is_dead : bool = 0
 @onready var sprite = $AnimatedSprite2D
 
+func _ready():
+	health = max_health
+	stamina = max_stamina
+	mana = max_mana
 func _physics_process(_delta):
+	
+	if health > 0:
+		get_input()
+		if stamina < 30:
+			stamina += _delta
+	
+		move_and_slide()
+		ani_player()
+	else:
+		is_dead = 1  
+		
+
+func get_input():
+	if Input.is_action_just_pressed(btn_atk):
+		attack()
 	
 	var direction_x = Input.get_axis(btn_left, btn_right)
 	var direction_y = Input.get_axis(btn_up, btn_down)
@@ -35,10 +56,6 @@ func _physics_process(_delta):
 	else:
 		velocity.y = move_toward(velocity.y, 0, friction)
 	
-	
-	move_and_slide()
-	ani_player()
-
 func ani_player():
 	if direction.y == 1:
 		sprite.play("Idle_Down")
@@ -62,7 +79,9 @@ func ani_player():
 		else:
 			sprite.play("Idle_Right")
 		
-	
+func take_damage(damage : int, knockback : int) -> void:
+	health = health - damage
+	print(health)
 
-
-	
+func attack():
+	print("poyo")
