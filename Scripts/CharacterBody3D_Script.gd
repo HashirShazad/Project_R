@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var ROCK : PackedScene = preload("res://Projectiles/Rock.tscn")
+@export var DAGGER : PackedScene = preload("res://Weapons/Dagger/dagger.tscn")
 @export var btn_up : StringName = "P1_Up"
 @export var btn_down : StringName  = "P1_Down"
 @export var btn_left : StringName = "P1_Left"
@@ -89,12 +90,12 @@ func take_damage(damage : int, knockback : int) -> void:
 
 func attack(atk_direction):
 	if ROCK:
-		throw(atk_direction)
+		throw(atk_direction, ROCK)
 		
 
-func throw(throw_direction):
-	var rock = ROCK.instantiate()
-	get_tree().current_scene.add_child(rock)
-	rock.global_position = self.global_position + 12 * direction
-	var rock_rotation = throw_direction.angle()
-	rock.rotation = rock_rotation
+func throw(throw_direction, item):
+	var throwable = item.instantiate()
+	get_tree().current_scene.add_child(throwable)
+	throwable.global_position = self.global_position + 12 * direction
+	var throwable_rotation = throw_direction.angle()
+	throwable.rotation = throwable_rotation
