@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://cva5hsb21d54f"]
+[gd_scene load_steps=70 format=3 uid="uid://cva5hsb21d54f"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody3D_Script.gd" id="1_4u8tq"]
 [ext_resource type="Texture2D" uid="uid://bwpnh1u0owqjx" path="res://Sprites/Props/Light.png" id="3_dwm21"]
@@ -319,98 +319,6 @@ tracks/4/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_inwy6"]
-resource_name = "Roll"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D/HurtBox/CollisionShape2D:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_2e8u6"]
-resource_name = "dagger_down_1"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Weapon:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [ExtResource("7_psoh6"), null]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Weapon:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(10, 11), Vector2(-9, 10), Vector2(-9, 11)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Weapon:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [-1.74533, -0.76969, 0.958186]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Weapon/Smear:texture")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [null, ExtResource("8_c0grl"), null]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Weapon:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Weapon/HitBox/CollisionShape2D:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
 [sub_resource type="Animation" id="Animation_2g2ak"]
 resource_name = "dagger_up_1"
 length = 0.3
@@ -697,9 +605,21 @@ tracks/1/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_w1mhc"]
-resource_name = "sword"
+[sub_resource type="Animation" id="Animation_inwy6"]
+resource_name = "Roll"
 length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/HurtBox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3sphm"]
 _data = {
@@ -712,11 +632,9 @@ _data = {
 "Idle_up_right": SubResource("Animation_ixkvi"),
 "RESET": SubResource("Animation_tqvyx"),
 "Roll": SubResource("Animation_inwy6"),
-"dagger_down_1": SubResource("Animation_2e8u6"),
 "dagger_up_1": SubResource("Animation_2g2ak"),
 "ghost_left": SubResource("Animation_ygqmb"),
 "ghost_right": SubResource("Animation_hn0j0"),
-"sword": SubResource("Animation_w1mhc"),
 "walk_down": SubResource("Animation_qlrm7"),
 "walk_left": SubResource("Animation_64q3n"),
 "walk_right": SubResource("Animation_mnlr4"),
@@ -734,7 +652,7 @@ animation = &"dagger_up_1"
 animation = &"Idle_Left"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_grl2r"]
-animation = &"dagger_down_1"
+animation = &"Idle_Down"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_du7d8"]
 animation = &"Idle_right"
@@ -889,7 +807,7 @@ advance_condition = &"is_walking"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_rhja8"]
 states/Dagger/node = SubResource("AnimationNodeBlendSpace2D_g3y3r")
-states/Dagger/position = Vector2(179.729, -110)
+states/Dagger/position = Vector2(180.729, -110)
 states/Damaged/node = SubResource("AnimationNodeAnimation_nuqko")
 states/Damaged/position = Vector2(335, 357)
 states/Dead/node = SubResource("AnimationNodeBlendSpace2D_j0hnc")
@@ -900,7 +818,7 @@ states/Start/position = Vector2(-77, 90)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_kbn3b")
 states/Walk/position = Vector2(473, -94)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_j2o4m"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_hmh2f"), "Idle", "Damaged", SubResource("AnimationNodeStateMachineTransition_wn1ls"), "Walk", "End", SubResource("AnimationNodeStateMachineTransition_i384x"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_o7rak"), "Damaged", "Idle", SubResource("AnimationNodeStateMachineTransition_lrj4a"), "Idle", "Dead", SubResource("AnimationNodeStateMachineTransition_iv6kg"), "Dead", "Idle", SubResource("AnimationNodeStateMachineTransition_vtt01"), "Walk", "Dead", SubResource("AnimationNodeStateMachineTransition_u7hfv"), "Damaged", "Dead", SubResource("AnimationNodeStateMachineTransition_gi4lq"), "Walk", "Dagger", SubResource("AnimationNodeStateMachineTransition_pgcbb"), "Idle", "Dagger", SubResource("AnimationNodeStateMachineTransition_bqyfl"), "Dagger", "Idle", SubResource("AnimationNodeStateMachineTransition_uqrvr"), "Dagger", "Walk", SubResource("AnimationNodeStateMachineTransition_d3m7s")]
-graph_offset = Vector2(-312.271, -194)
+graph_offset = Vector2(-355.271, -124)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rjvcf"]
 size = Vector2(10, 14)
@@ -943,7 +861,7 @@ libraries = {
 [node name="Hit_VFX" type="CPUParticles2D" parent="."]
 texture_filter = 1
 emitting = false
-amount = 15
+amount = 30
 one_shot = true
 explosiveness = 1.0
 texture = ExtResource("3_dwm21")
@@ -952,8 +870,8 @@ emission_sphere_radius = 3.09
 particle_flag_align_y = true
 direction = Vector2(0, 0)
 spread = 120.9
-gravity = Vector2(-50, 50)
-initial_velocity_max = 100.0
+gravity = Vector2(-100, 100)
+initial_velocity_max = 200.0
 orbit_velocity_min = -0.4
 orbit_velocity_max = 0.4
 scale_amount_min = 0.1
@@ -971,7 +889,7 @@ parameters/conditions/is_damaged = false
 parameters/conditions/is_dead = false
 parameters/conditions/is_idle = false
 parameters/conditions/is_walking = false
-parameters/Dagger/blend_position = Vector2(0.00426984, 0.920705)
+parameters/Dagger/blend_position = Vector2(-0.0145175, -0.189427)
 parameters/Dead/blend_position = Vector2(0.144928, 0.195767)
 parameters/Idle/blend_position = Vector2(0.193237, 0.0748899)
 parameters/Walk/blend_position = Vector2(0.0018903, 0.89418)

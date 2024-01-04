@@ -83,9 +83,6 @@ func get_input():
 	if Input.is_action_just_pressed(btn_r_atk):
 		var atk_direction = self.global_position.direction_to(self.global_position + (2 * direction))
 		right_hand_attack(atk_direction)
-		is_stunned = true
-		await get_tree().create_timer(.1).timeout
-		is_stunned = false
 		
 	if Input.is_action_just_pressed(btn_l_atk):
 		var atk_direction = self.global_position.direction_to(self.global_position + (2 * direction))
@@ -140,17 +137,20 @@ func set_para_ani(state: states):
 			ani_tree[ani[2]] = false
 			ani_tree[ani[3]] = false
 			ani_tree[ani[4]] = true
-			
 		
 func take_damage(damage : int, hit_stop: float) -> void:
 	hit_stop(0.05, hit_stop)
 	health = health - damage
 
 func right_hand_attack(atk_direction):
+	if is_dead:
+		return
 	if ROCK:
 		throw(atk_direction, ROCK,  pixel_offset)
 
 func left_hand_attack(atk_direction):
+	if is_dead:
+		return
 	atk(weapons.DAGGER)
 	
 func atk(weapon: weapons):
@@ -158,6 +158,7 @@ func atk(weapon: weapons):
 		weapons.DAGGER:
 			is_dagger = 1
 			is_stunned = 1
+			set_para_ani(states.DAGGER)
 			await get_tree().create_timer(.4).timeout
 			is_dagger = 0
 			is_stunned = 0
@@ -168,6 +169,9 @@ func throw(throw_direction, item, offset):
 	throwable.global_position = self.global_position + (offset * direction)
 	var throwable_rotation = throw_direction.angle()
 	throwable.rotation = throwable_rotation
+	is_stunned = true
+	await get_tree().create_timer(.1).timeout
+	is_stunned = false
 
 func recieve_knock_back(damage_source_pos : Vector2, value : int):
 	if value != 0:
