@@ -153,4 +153,5 @@ func recieve_knock_back(damage_source_pos : Vector2, value : int):
 		var knock_back_direction = damage_source_pos.direction_to(self.global_position)
 		var knock_back = value * knock_back_direction
 		velocity = knock_back
+		move_and_collide(velocity)
 		

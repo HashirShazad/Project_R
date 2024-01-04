@@ -171,6 +171,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rjvcf"]
+size = Vector2(10, 14)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tymbv"]
 radius = 5.0
 height = 10.0
@@ -193,7 +196,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D/HurtBox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("AnimatedSprite2D/HurtBox/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -311,9 +314,6 @@ states/Walk/position = Vector2(550, 236)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_j2o4m"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_hmh2f"), "Idle", "Damaged", SubResource("AnimationNodeStateMachineTransition_wn1ls"), "Walk", "End", SubResource("AnimationNodeStateMachineTransition_i384x"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_o7rak"), "Damaged", "Idle", SubResource("AnimationNodeStateMachineTransition_lrj4a")]
 graph_offset = Vector2(-90, 48)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rjvcf"]
-size = Vector2(10, 14)
-
 [node name="Character" type="CharacterBody2D"]
 y_sort_enabled = true
 collision_layer = 0
@@ -328,7 +328,6 @@ texture = ExtResource("3_dwm21")
 texture_scale = 5.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player"]]
-visible = false
 y_sort_enabled = true
 texture_filter = 1
 position = Vector2(0, 8)
@@ -338,6 +337,18 @@ animation = &"Idle_Up_Right"
 autoplay = "Idle_Down"
 frame_progress = 0.194996
 offset = Vector2(0, -10)
+
+[node name="HurtBox" type="Area2D" parent="AnimatedSprite2D"]
+position = Vector2(-0.0188082, -12)
+rotation = -0.00137874
+scale = Vector2(1, 1)
+skew = -0.000188589
+script = ExtResource("5_230r3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HurtBox"]
+position = Vector2(4.65619e-09, 3)
+shape = SubResource("RectangleShape2D_rjvcf")
+debug_color = Color(0.92549, 0, 0.219608, 0.419608)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -385,6 +396,7 @@ parameters/Idle/blend_position = Vector2(0.000771046, -0.00529099)
 parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 1
 position = Vector2(0, -2)
 texture = ExtResource("4_1db2e")
@@ -392,15 +404,4 @@ hframes = 16
 vframes = 16
 frame = 4
 
-[node name="HurtBox" type="Area2D" parent="Sprite2D"]
-position = Vector2(-0.0165451, -2)
-rotation = -0.00137874
-scale = Vector2(1, 1)
-script = ExtResource("5_230r3")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HurtBox"]
-position = Vector2(4.65619e-09, 3)
-shape = SubResource("RectangleShape2D_rjvcf")
-debug_color = Color(0.92549, 0, 0.219608, 0.419608)
-
-[connection signal="area_entered" from="Sprite2D/HurtBox" to="Sprite2D/HurtBox" method="area_entered"]
+[connection signal="area_entered" from="AnimatedSprite2D/HurtBox" to="AnimatedSprite2D/HurtBox" method="area_entered"]
