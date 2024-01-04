@@ -26,12 +26,14 @@ var health : float
 var max_stamina : int = 30
 var stamina : float
 var is_dead : bool = 0
-@onready var sprite = $AnimatedSprite2D
 
+@onready var sprite = $AnimatedSprite2D
+@onready var ani_tree = $AnimationTree
 func _ready():
 	health = max_health
 	stamina = max_stamina
 	mana = max_mana
+	ani_tree.active = true
 
 func _physics_process(_delta):
 	
@@ -86,9 +88,11 @@ func get_input():
 	
 	
 func ani_player(state : states):
-	print(direction)
 	match state:
 		states.Idle:
+			ani_tree["parameters/conditions/is_idle"] = true
+			ani_tree["parameters/conditions/is_walking"] = false
+			ani_tree["parameters/conditions/is_damaged"] = false
 			if direction == Vector2(0,1):
 				sprite.play("Idle_Down")
 			elif direction == Vector2(0,-1):
@@ -106,6 +110,9 @@ func ani_player(state : states):
 				sprite.flip_h = 1
 				sprite.play("Idle_Up_Right")
 		states.Walking:
+			ani_tree["parameters/conditions/is_idle"] = false
+			ani_tree["parameters/conditions/is_walking"] = true
+			ani_tree["parameters/conditions/is_damaged"] = false
 			if direction == Vector2(0,1):
 				sprite.play("Idle_Down")
 			elif direction == Vector2(0,-1):

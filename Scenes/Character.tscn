@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cva5hsb21d54f"]
+[gd_scene load_steps=42 format=3 uid="uid://cva5hsb21d54f"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody3D_Script.gd" id="1_4u8tq"]
 [ext_resource type="Texture2D" uid="uid://bwpnh1u0owqjx" path="res://Sprites/Props/Light.png" id="3_dwm21"]
@@ -171,9 +171,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rjvcf"]
-size = Vector2(10, 14)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tymbv"]
 radius = 5.0
 height = 10.0
@@ -196,7 +193,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/HurtBox/CollisionShape2D:disabled")
+tracks/1/path = NodePath("Sprite2D/HurtBox/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -230,14 +227,92 @@ tracks/3/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_6wlm6"]
+resource_name = "Idle_Up"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_tqvyx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3sphm"]
 _data = {
-"Damaged": SubResource("Animation_s5b67")
+"Damaged": SubResource("Animation_s5b67"),
+"Idle_Up": SubResource("Animation_6wlm6"),
+"RESET": SubResource("Animation_tqvyx")
 }
 
 [sub_resource type="Curve" id="Curve_hq23k"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.247191, 1), 0.0, 0.0, 0, 0, Vector2(0.494382, 0.450549), 0.0, 0.0, 0, 0, Vector2(0.567416, 0), 0.0, 0.0, 0, 0]
 point_count = 4
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nuqko"]
+animation = &"Damaged"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_f07oo"]
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_kbn3b"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_j2o4m"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hmh2f"]
+advance_mode = 2
+advance_condition = &"is_walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wn1ls"]
+advance_mode = 2
+advance_condition = &"is_damaged"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_i384x"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_o7rak"]
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lrj4a"]
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_rhja8"]
+states/Damaged/node = SubResource("AnimationNodeAnimation_nuqko")
+states/Damaged/position = Vector2(221, 236)
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_f07oo")
+states/Idle/position = Vector2(417, 100)
+states/Start/position = Vector2(233, 105)
+states/Walk/node = SubResource("AnimationNodeBlendSpace2D_kbn3b")
+states/Walk/position = Vector2(550, 236)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_j2o4m"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_hmh2f"), "Idle", "Damaged", SubResource("AnimationNodeStateMachineTransition_wn1ls"), "Walk", "End", SubResource("AnimationNodeStateMachineTransition_i384x"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_o7rak"), "Damaged", "Idle", SubResource("AnimationNodeStateMachineTransition_lrj4a")]
+graph_offset = Vector2(-90, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rjvcf"]
+size = Vector2(10, 14)
 
 [node name="Character" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -253,6 +328,7 @@ texture = ExtResource("3_dwm21")
 texture_scale = 5.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player"]]
+visible = false
 y_sort_enabled = true
 texture_filter = 1
 position = Vector2(0, 8)
@@ -260,19 +336,8 @@ skew = 0.000188589
 sprite_frames = SubResource("SpriteFrames_p301g")
 animation = &"Idle_Up_Right"
 autoplay = "Idle_Down"
-frame_progress = 0.402944
+frame_progress = 0.194996
 offset = Vector2(0, -10)
-
-[node name="HurtBox" type="Area2D" parent="AnimatedSprite2D"]
-position = Vector2(-0.0188082, -12)
-rotation = -0.00137874
-skew = -0.000188589
-script = ExtResource("5_230r3")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HurtBox"]
-position = Vector2(4.65619e-09, 3)
-shape = SubResource("RectangleShape2D_rjvcf")
-debug_color = Color(0.92549, 0, 0.219608, 0.419608)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -284,6 +349,8 @@ libraries = {
 }
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color(0, 0, 0, 1)
 
 [node name="Hit_VFX" type="CPUParticles2D" parent="."]
 texture_filter = 1
@@ -309,6 +376,31 @@ scale_amount_curve = SubResource("Curve_hq23k")
 libraries = {
 "": SubResource("AnimationLibrary_3sphm")
 }
+tree_root = SubResource("AnimationNodeStateMachine_rhja8")
 anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/is_damaged = false
+parameters/conditions/is_idle = false
+parameters/conditions/is_walking = false
+parameters/Idle/blend_position = Vector2(0.000771046, -0.00529099)
+parameters/Walk/blend_position = Vector2(0, 0)
 
-[connection signal="area_entered" from="AnimatedSprite2D/HurtBox" to="AnimatedSprite2D/HurtBox" method="area_entered"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -2)
+texture = ExtResource("4_1db2e")
+hframes = 16
+vframes = 16
+frame = 4
+
+[node name="HurtBox" type="Area2D" parent="Sprite2D"]
+position = Vector2(-0.0165451, -2)
+rotation = -0.00137874
+scale = Vector2(1, 1)
+script = ExtResource("5_230r3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HurtBox"]
+position = Vector2(4.65619e-09, 3)
+shape = SubResource("RectangleShape2D_rjvcf")
+debug_color = Color(0.92549, 0, 0.219608, 0.419608)
+
+[connection signal="area_entered" from="Sprite2D/HurtBox" to="Sprite2D/HurtBox" method="area_entered"]
