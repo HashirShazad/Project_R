@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://cva5hsb21d54f"]
+[gd_scene load_steps=76 format=3 uid="uid://cva5hsb21d54f"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody3D_Script.gd" id="1_4u8tq"]
 [ext_resource type="Texture2D" uid="uid://bwpnh1u0owqjx" path="res://Sprites/Props/Light.png" id="3_dwm21"]
@@ -844,6 +844,12 @@ animation = &"Idle_Down"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_afqq0"]
 animation = &"Idle_Up"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q88nt"]
+animation = &"Idle_down_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xf3v8"]
+animation = &"Idle_down_right"
+
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_f07oo"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_ol0w0")
 blend_point_0/pos = Vector2(-1, 0)
@@ -857,6 +863,10 @@ blend_point_4/node = SubResource("AnimationNodeAnimation_ussu6")
 blend_point_4/pos = Vector2(0, 1)
 blend_point_5/node = SubResource("AnimationNodeAnimation_afqq0")
 blend_point_5/pos = Vector2(0, -1)
+blend_point_6/node = SubResource("AnimationNodeAnimation_q88nt")
+blend_point_6/pos = Vector2(-1, 1)
+blend_point_7/node = SubResource("AnimationNodeAnimation_xf3v8")
+blend_point_7/pos = Vector2(1, 1)
 blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0ad4l"]
@@ -1033,13 +1043,14 @@ parameters/conditions/is_idle = false
 parameters/conditions/is_walking = false
 parameters/Dagger/blend_position = Vector2(0.00426984, 0.920705)
 parameters/Dead/blend_position = Vector2(0.144928, 0.195767)
-parameters/Idle/blend_position = Vector2(0.193237, 0.0748899)
+parameters/Idle/blend_position = Vector2(-0.987118, 0.78836)
 parameters/Walk/blend_position = Vector2(0.0018903, 0.89418)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -2)
 texture = ExtResource("4_1db2e")
+flip_h = true
 hframes = 16
 vframes = 16
 frame = 4
