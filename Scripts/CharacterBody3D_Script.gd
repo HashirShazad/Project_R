@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 const ROCK : PackedScene = preload("res://Projectiles/Rock.tscn")
 const DAGGER : PackedScene = preload("res://Weapons/Dagger/dagger.tscn")
@@ -15,8 +16,8 @@ enum states {Idle , Walking}
 var is_stunned : bool = 0
 var pixel_offset = 20
 var walk_speed = 200
-var speed = 100
-var friction = 16
+var speed = 1.25
+var friction = 12
 var direction :Vector2 = Vector2(0, -1)
 var max_mana : int = 30
 var mana : float 
@@ -40,8 +41,9 @@ func _physics_process(_delta):
 		get_input()
 		if stamina < 30:
 			stamina += _delta
-	
-		move_and_slide()
+		
+		velocity.normalized()
+		move_and_collide(velocity)
 		if velocity != Vector2(0, 0):
 			ani_player(states.Walking)
 		else:
@@ -58,6 +60,7 @@ func get_input():
 		direction.x = direction_x
 		direction.y = direction_y
 		velocity.x = direction_x * speed
+		velocity.x = move_toward(0, velocity.x,100)
 	else:
 		velocity.x = move_toward(velocity.x, 0, friction)
 	if direction_y:
@@ -83,34 +86,45 @@ func get_input():
 	
 	
 func ani_player(state : states):
+	print(direction)
 	match state:
 		states.Idle:
-			if direction.y == 1:
+			if direction == Vector2(0,1):
 				sprite.play("Idle_Down")
-			elif direction.y == -1:
+			elif direction == Vector2(0,-1):
 				sprite.play("Idle_Up")
-			elif direction.x == 1:
+			elif direction == Vector2(1,0):
 				sprite.flip_h = 0
 				sprite.play("Idle_Right")
-			elif direction.x == -1:
+			elif direction == Vector2(-1,0):
 				sprite.flip_h = 1
 				sprite.play("Idle_Right")
-		
+			elif direction == Vector2(1, -1):
+				sprite.flip_h = 0
+				sprite.play("Idle_Up_Right")
+			elif direction == Vector2(-1, -1):
+				sprite.flip_h = 1
+				sprite.play("Idle_Up_Right")
 		states.Walking:
-			if direction.y == 1:
+			if direction == Vector2(0,1):
 				sprite.play("Idle_Down")
-			elif direction.y == -1:
+			elif direction == Vector2(0,-1):
 				sprite.play("Idle_Up")
-			elif direction.x == 1:
+			elif direction == Vector2(1,0):
 				sprite.flip_h = 0
 				sprite.play("Walk_Right")
-			elif direction.x == -1:
+			elif direction == Vector2(-1,0):
 				sprite.flip_h = 1
 				sprite.play("Walk_Right")
+			elif direction == Vector2(1, -1):
+				sprite.flip_h = 0
+				sprite.play("Idle_Up_Right")
+			elif direction == Vector2(-1, -1):
+				sprite.flip_h = 1
+				sprite.play("Idle_Up_Right")
 
 func take_damage(damage : int, knockback : int) -> void:
 	health = health - damage
-	print(health)
 
 func right_hand_attack(atk_direction):
 	if ROCK:
@@ -131,5 +145,5 @@ func recieve_knock_back(damage_source_pos : Vector2, value : int):
 	if value != 0:
 		var knock_back_direction = damage_source_pos.direction_to(self.global_position)
 		var knock_back = value * knock_back_direction
-		global_position += knock_back
+		velocity = knock_back
 		

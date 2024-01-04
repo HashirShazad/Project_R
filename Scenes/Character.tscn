@@ -1,14 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://cva5hsb21d54f"]
+[gd_scene load_steps=30 format=3 uid="uid://cva5hsb21d54f"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody3D_Script.gd" id="1_4u8tq"]
-[ext_resource type="Texture2D" uid="uid://bxmqsavj2px8o" path="res://Idle/Idle1.png" id="2_dd0k7"]
 [ext_resource type="Texture2D" uid="uid://bwpnh1u0owqjx" path="res://Sprites/Props/Light.png" id="3_dwm21"]
-[ext_resource type="Texture2D" uid="uid://bbyr6eydk6trw" path="res://Characters/Ds/Sprite_Sheet.png" id="4_1db2e"]
+[ext_resource type="Texture2D" uid="uid://ya1yx33dccne" path="res://Characters/Ds/Sprite_Sheet.png" id="4_1db2e"]
 [ext_resource type="Script" path="res://Scripts/HurtBox.gd" id="5_230r3"]
-
-[sub_resource type="Curve" id="Curve_uu2xp"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.251337, 0.516483), 0.0, 0.0, 0, 0, Vector2(1, 0.010989), 0.0, 0.0, 0, 0]
-point_count = 3
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bxvr0"]
 atlas = ExtResource("4_1db2e")
@@ -57,6 +52,14 @@ region = Rect2(64, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qcoyd"]
 atlas = ExtResource("4_1db2e")
 region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66367"]
+atlas = ExtResource("4_1db2e")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sw7dw"]
+atlas = ExtResource("4_1db2e")
+region = Rect2(112, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhnnp"]
 atlas = ExtResource("4_1db2e")
@@ -138,6 +141,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_66367")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sw7dw")
+}],
+"loop": true,
+"name": &"Idle_Up_Right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_qhnnp")
 }, {
 "duration": 1.0,
@@ -164,17 +178,71 @@ size = Vector2(10, 14)
 radius = 5.0
 height = 10.0
 
+[sub_resource type="Animation" id="Animation_s5b67"]
+resource_name = "Damaged"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.349066, 0.349066, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/HurtBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasModulate:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.603922, 0, 0.152941, 1), Color(1, 1, 1, 1), Color(0.603922, 0, 0.152941, 1), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hit_VFX:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3sphm"]
+_data = {
+"Damaged": SubResource("Animation_s5b67")
+}
+
+[sub_resource type="Curve" id="Curve_hq23k"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.247191, 1), 0.0, 0.0, 0, 0, Vector2(0.494382, 0.450549), 0.0, 0.0, 0, 0, Vector2(0.567416, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
 [node name="Character" type="CharacterBody2D"]
 y_sort_enabled = true
 collision_layer = 0
 script = ExtResource("1_4u8tq")
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-y_sort_enabled = true
-texture_filter = 1
-texture = ExtResource("2_dd0k7")
-gravity = Vector2(0, 0)
-scale_amount_curve = SubResource("Curve_uu2xp")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 visible = false
@@ -188,12 +256,11 @@ texture_scale = 5.0
 y_sort_enabled = true
 texture_filter = 1
 position = Vector2(0, 8)
-rotation = 0.00137874
 skew = 0.000188589
 sprite_frames = SubResource("SpriteFrames_p301g")
-animation = &"Bite"
+animation = &"Idle_Up_Right"
 autoplay = "Idle_Down"
-frame_progress = 0.305723
+frame_progress = 0.402944
 offset = Vector2(0, -10)
 
 [node name="HurtBox" type="Area2D" parent="AnimatedSprite2D"]
@@ -210,5 +277,38 @@ debug_color = Color(0.92549, 0, 0.219608, 0.419608)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_tymbv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3sphm")
+}
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="Hit_VFX" type="CPUParticles2D" parent="."]
+texture_filter = 1
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("3_dwm21")
+emission_shape = 1
+emission_sphere_radius = 3.09
+particle_flag_align_y = true
+direction = Vector2(0, 0)
+spread = 120.9
+gravity = Vector2(-100, 100)
+initial_velocity_max = 200.0
+orbit_velocity_min = -0.4
+orbit_velocity_max = 0.4
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_hq23k")
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3sphm")
+}
+anim_player = NodePath("../AnimationPlayer")
 
 [connection signal="area_entered" from="AnimatedSprite2D/HurtBox" to="AnimatedSprite2D/HurtBox" method="area_entered"]
