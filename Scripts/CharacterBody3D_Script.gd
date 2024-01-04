@@ -14,7 +14,8 @@ const ARROW : PackedScene = preload("res://Projectiles/Arrow.tscn")
 
 var is_stunned : bool = 0
 var pixel_offset = 20
-var walk_speed = 200
+var walk_speed = 1.25
+var ghost_speed = 1.5
 var speed = 1.25
 var friction = 12
 var direction :Vector2 = Vector2(0, -1)
@@ -27,6 +28,11 @@ var stamina : float
 var is_dead : bool = 0
 
 @onready var ani_tree = $AnimationTree
+enum states {IDLE, WALKING, DAMAGED, DEAD}
+var ani = ["parameters/conditions/is_idle",
+ "parameters/conditions/is_walking",
+ "parameters/conditions/is_damaged",
+ "parameters/conditions/is_dead"]
 
 func _ready():
 	health = max_health
@@ -38,7 +44,8 @@ func _process(delta):
 	ani_player()
 	
 func _physics_process(_delta):
-	
+	if health < 0:
+		is_dead = 1
 	if is_stunned:
 		pass
 	else:
@@ -86,20 +93,43 @@ func get_input():
 	
 	
 func ani_player():
-	if velocity == Vector2(0,0):
-		print("IDLE")
-		ani_tree["parameters/Idle/blend_position"] = direction
-		ani_tree["parameters/conditions/is_idle"] = true
-		ani_tree["parameters/conditions/is_walking"] = false
-		ani_tree["parameters/conditions/is_damaged"] = false
+	ani_tree["parameters/Idle/blend_position"] = direction
+	ani_tree["parameters/Walk/blend_position"] = direction
+	ani_tree["parameters/Dead/blend_position"] = direction
+	if is_stunned:
+		pass
+	elif is_dead:
+		set_para_ani(states.DEAD)
+	elif velocity == Vector2(0,0):
+		set_para_ani(states.IDLE)
 	else:
-		print("WALK")
-		ani_tree["parameters/Walk/blend_position"] = direction
-		ani_tree["parameters/conditions/is_idle"] = false
-		ani_tree["parameters/conditions/is_walking"] = true
-		ani_tree["parameters/conditions/is_damaged"] = false
-
-func take_damage(damage : int, knockback : int) -> void:
+		set_para_ani(states.WALKING)
+		
+func set_para_ani(state: states):
+	match state:
+		states.IDLE:
+			ani_tree[ani[0]] = true
+			ani_tree[ani[1]] = false
+			ani_tree[ani[2]] = false
+			ani_tree[ani[3]] = false
+		states.WALKING:
+			ani_tree[ani[0]] = false
+			ani_tree[ani[1]] = true
+			ani_tree[ani[2]] = false
+			ani_tree[ani[3]] = false
+		states.DAMAGED:
+			ani_tree[ani[0]] = false
+			ani_tree[ani[1]] = false
+			ani_tree[ani[2]] = true
+			ani_tree[ani[3]] = false
+		states.DEAD:
+			ani_tree[ani[0]] = false
+			ani_tree[ani[1]] = false
+			ani_tree[ani[2]] = false
+			ani_tree[ani[3]] = true
+			speed = ghost_speed
+		
+func take_damage(damage : int) -> void:
 	health = health - damage
 
 func right_hand_attack(atk_direction):
@@ -123,4 +153,9 @@ func recieve_knock_back(damage_source_pos : Vector2, value : int):
 		var knock_back = value * knock_back_direction
 		velocity = knock_back
 		move_and_collide(velocity)
+		is_stunned = true
+		set_para_ani(states.DAMAGED)
+		await get_tree().create_timer(.3).timeout
+		set_para_ani(states.IDLE)
+		is_stunned = false
 		
