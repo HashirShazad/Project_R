@@ -1,10 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqtq8beg31vg0"]
+[gd_scene load_steps=6 format=3 uid="uid://bqtq8beg31vg0"]
 
 [ext_resource type="Texture2D" uid="uid://dsak8el7tg0w1" path="res://gfx/Overworld.png" id="1_mq1wt"]
 [ext_resource type="PackedScene" uid="uid://cva5hsb21d54f" path="res://Scenes/Character.tscn" id="2_hpfrx"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="3_nf8gv"]
-[ext_resource type="PackedScene" uid="uid://coewlnrrrtqsg" path="res://Projectiles/Rock.tscn" id="4_07q5n"]
-[ext_resource type="PackedScene" uid="uid://bs0dngsiy24av" path="res://Weapons/Dagger/dagger.tscn" id="5_fcfee"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nnh6r"]
 texture = ExtResource("1_mq1wt")
@@ -3434,8 +3432,3 @@ position = Vector2(500, 300)
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 script = ExtResource("3_nf8gv")
-
-[node name="Rock" parent="Node2D" instance=ExtResource("4_07q5n")]
-position = Vector2(486, 243)
-
-[node name="Dagger" parent="Node2D" instance=ExtResource("5_fcfee")]

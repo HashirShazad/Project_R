@@ -82,7 +82,7 @@ _data = {
 
 [node name="Dagger" type="Area2D"]
 position = Vector2(0, -12)
-rotation = 2.79253
+rotation = -0.785398
 script = ExtResource("2_i6lj8")
 offset = 13
 
@@ -90,7 +90,6 @@ offset = 13
 position = Vector2(2.38419e-07, -4)
 rotation = -0.811578
 shape = SubResource("CircleShape2D_gvvv7")
-disabled = true
 
 [node name="Dagger" type="Sprite2D" parent="."]
 texture_filter = 1
