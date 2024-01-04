@@ -1286,7 +1286,7 @@ rotation = -0.76969
 
 [node name="Smear" type="Sprite2D" parent="Weapon"]
 texture_filter = 1
-position = Vector2(2.10995, -0.740341)
+position = Vector2(-2.13216, -0.673699)
 rotation = -1.606
 scale = Vector2(0.5, 0.5)
 
