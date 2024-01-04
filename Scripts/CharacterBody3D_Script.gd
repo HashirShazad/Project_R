@@ -159,7 +159,7 @@ func atk(weapon: weapons):
 			is_dagger = 1
 			is_stunned = 1
 			set_para_ani(states.DAGGER)
-			await get_tree().create_timer(.4).timeout
+			await get_tree().create_timer(.6).timeout
 			is_dagger = 0
 			is_stunned = 0
 			pass
