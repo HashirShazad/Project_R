@@ -12,7 +12,6 @@ const ARROW : PackedScene = preload("res://Projectiles/Arrow.tscn")
 @export var btn_r_atk : StringName = "P1_R_Atk"
 @export var btn_l_atk : StringName = "P1_L_Atk"
 
-enum states {Idle , Walking}
 var is_stunned : bool = 0
 var pixel_offset = 20
 var walk_speed = 200
@@ -27,14 +26,17 @@ var max_stamina : int = 30
 var stamina : float
 var is_dead : bool = 0
 
-@onready var sprite = $AnimatedSprite2D
 @onready var ani_tree = $AnimationTree
+
 func _ready():
 	health = max_health
 	stamina = max_stamina
 	mana = max_mana
 	ani_tree.active = true
 
+func _process(delta):
+	ani_player()
+	
 func _physics_process(_delta):
 	
 	if is_stunned:
@@ -46,10 +48,6 @@ func _physics_process(_delta):
 		
 		velocity.normalized()
 		move_and_collide(velocity)
-		if velocity != Vector2(0, 0):
-			ani_player(states.Walking)
-		else:
-			ani_player(states.Idle)
 		
 		
 func get_input():
@@ -87,48 +85,19 @@ func get_input():
 		is_stunned = false
 	
 	
-func ani_player(state : states):
-	match state:
-		states.Idle:
-			ani_tree["parameters/conditions/is_idle"] = true
-			ani_tree["parameters/conditions/is_walking"] = false
-			ani_tree["parameters/conditions/is_damaged"] = false
-			if direction == Vector2(0,1):
-				sprite.play("Idle_Down")
-			elif direction == Vector2(0,-1):
-				sprite.play("Idle_Up")
-			elif direction == Vector2(1,0):
-				sprite.flip_h = 0
-				sprite.play("Idle_Right")
-			elif direction == Vector2(-1,0):
-				sprite.flip_h = 1
-				sprite.play("Idle_Right")
-			elif direction == Vector2(1, -1):
-				sprite.flip_h = 0
-				sprite.play("Idle_Up_Right")
-			elif direction == Vector2(-1, -1):
-				sprite.flip_h = 1
-				sprite.play("Idle_Up_Right")
-		states.Walking:
-			ani_tree["parameters/conditions/is_idle"] = false
-			ani_tree["parameters/conditions/is_walking"] = true
-			ani_tree["parameters/conditions/is_damaged"] = false
-			if direction == Vector2(0,1):
-				sprite.play("Idle_Down")
-			elif direction == Vector2(0,-1):
-				sprite.play("Idle_Up")
-			elif direction == Vector2(1,0):
-				sprite.flip_h = 0
-				sprite.play("Walk_Right")
-			elif direction == Vector2(-1,0):
-				sprite.flip_h = 1
-				sprite.play("Walk_Right")
-			elif direction == Vector2(1, -1):
-				sprite.flip_h = 0
-				sprite.play("Idle_Up_Right")
-			elif direction == Vector2(-1, -1):
-				sprite.flip_h = 1
-				sprite.play("Idle_Up_Right")
+func ani_player():
+	if velocity == Vector2(0,0):
+		print("IDLE")
+		ani_tree["parameters/Idle/blend_position"] = direction
+		ani_tree["parameters/conditions/is_idle"] = true
+		ani_tree["parameters/conditions/is_walking"] = false
+		ani_tree["parameters/conditions/is_damaged"] = false
+	else:
+		print("WALK")
+		ani_tree["parameters/Walk/blend_position"] = direction
+		ani_tree["parameters/conditions/is_idle"] = false
+		ani_tree["parameters/conditions/is_walking"] = true
+		ani_tree["parameters/conditions/is_damaged"] = false
 
 func take_damage(damage : int, knockback : int) -> void:
 	health = health - damage
