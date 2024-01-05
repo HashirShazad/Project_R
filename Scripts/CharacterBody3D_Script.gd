@@ -145,8 +145,8 @@ func take_damage(damage : int, hit_stop: float, screw_state : float) -> void:
 func right_hand_attack(atk_direction):
 	if is_dead:
 		return
-	if ROCK:
-		throw(atk_direction, ROCK,  pixel_offset)
+	if ARROW:
+		throw(atk_direction, ARROW,  pixel_offset)
 
 func left_hand_attack(atk_direction):
 	if is_dead:
