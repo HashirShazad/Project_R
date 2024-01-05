@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://cviol4u1n2gp3"]
+
+[ext_resource type="Script" path="res://Scripts/Weapon_HitBox.gd" id="1_co5uy"]
+[ext_resource type="Texture2D" uid="uid://oq6mq2tue8xr" path="res://Weapons/Weapons.png" id="2_7pm31"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ggbum"]
+radius = 6.08276
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grjja"]
+atlas = ExtResource("2_7pm31")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i83ln"]
+atlas = ExtResource("2_7pm31")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojf88"]
+atlas = ExtResource("2_7pm31")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o2650"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grjja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i83ln")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojf88")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="Dagger" type="Area2D"]
+y_sort_enabled = true
+position = Vector2(3, -6)
+script = ExtResource("1_co5uy")
+damage = 5.0
+knock_back_value = 20
+hit_stop = 0.3
+self_stun = 0.0
+player_speed = 0.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 2)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_ggbum")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(7.2688e-06, 2)
+sprite_frames = SubResource("SpriteFrames_o2650")
+autoplay = "default"
+frame_progress = 0.34917
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

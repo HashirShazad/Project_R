@@ -1,21 +1,21 @@
 [gd_scene load_steps=8 format=3 uid="uid://bs0dngsiy24av"]
 
-[ext_resource type="Script" path="res://Scripts/Weapon_HitBox.gd" id="1_vm4nd"]
-[ext_resource type="Texture2D" uid="uid://oq6mq2tue8xr" path="res://Weapons/Weapons.png" id="2_yplrc"]
+[ext_resource type="Script" path="res://Scripts/Weapon_HitBox.gd" id="1_sle4a"]
+[ext_resource type="Texture2D" uid="uid://oq6mq2tue8xr" path="res://Weapons/Weapons.png" id="2_a8fy1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ggbum"]
 radius = 8.03508
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j56d8"]
-atlas = ExtResource("2_yplrc")
+atlas = ExtResource("2_a8fy1")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jvn1l"]
-atlas = ExtResource("2_yplrc")
+atlas = ExtResource("2_a8fy1")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lxwly"]
-atlas = ExtResource("2_yplrc")
+atlas = ExtResource("2_a8fy1")
 region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o2650"]
@@ -38,8 +38,9 @@ animations = [{
 [node name="Dagger" type="Area2D"]
 y_sort_enabled = true
 position = Vector2(3, -6)
-script = ExtResource("1_vm4nd")
+script = ExtResource("1_sle4a")
 knock_back_value = 15
+self_stun = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(5, 2)

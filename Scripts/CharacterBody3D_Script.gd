@@ -1,9 +1,12 @@
 extends CharacterBody2D
 class_name Player
 
-const ROCK : PackedScene = preload("res://Projectiles/Rock.tscn")
-const ARROW : PackedScene = preload("res://Projectiles/Arrow.tscn")
-const DAGGER : PackedScene = preload("res://Weapons/Dagger/dagger.tscn")
+var WEAPONS = {
+	rock  = preload("res://Projectiles/Rock.tscn"),
+	arrow = preload("res://Projectiles/Arrow.tscn"),
+	dagger_1 = preload("res://Weapons/Dagger/dagger_1.tscn"),
+	dagger_2 = preload("res://Weapons/Dagger/dagger_2.tscn")
+}
 
 @export var btn_up : StringName = "P1_Up"
 @export var btn_down : StringName  = "P1_Down"
@@ -11,6 +14,7 @@ const DAGGER : PackedScene = preload("res://Weapons/Dagger/dagger.tscn")
 @export var btn_right : StringName = "P1_Right"
 @export var btn_r_atk : StringName = "P1_R_Atk"
 @export var btn_l_atk : StringName = "P1_L_Atk"
+@export var btn_swap : StringName = "P1_Swap"
 
 var is_dead : bool = 0
 var is_dagger: bool = 0
@@ -20,6 +24,7 @@ var is_invulnerable : bool = 0
 var pixel_offset = 20
 var walk_speed = 1.25
 var ghost_speed = 1.5
+var dagger_speed = .25
 var speed = 1.25
 var friction = 12
 var direction :Vector2 = Vector2(0, -1)
@@ -33,13 +38,15 @@ var stamina : float
 
 @onready var ani_tree = $AnimationTree
 enum states {IDLE, WALKING, DAMAGED, DEAD, DAGGER}
-enum weapons{DAGGER, ROCK}
-var ani = ["parameters/conditions/is_idle",
- "parameters/conditions/is_walking",
- "parameters/conditions/is_damaged",
- "parameters/conditions/is_dead",
-"parameters/conditions/is_dagger"]
+var ani = {
+	idle = "parameters/conditions/is_idle",
+	walking = "parameters/conditions/is_walking",
+	damaged =  "parameters/conditions/is_damaged",
+	dead =  "parameters/conditions/is_dead"
+}
 
+var left_weapon = WEAPONS.dagger_1
+var right_weapon = WEAPONS.arrow
 func _ready():
 	health = max_health
 	stamina = max_stamina
@@ -52,8 +59,9 @@ func _process(delta):
 func _physics_process(_delta):
 	if health < 0:
 		is_dead = 1
+		speed = ghost_speed
 	if is_stunned:
-		pass
+		return
 	else:
 		get_input()
 		if stamina < 30:
@@ -90,11 +98,27 @@ func get_input():
 		var atk_direction = self.global_position.direction_to(self.global_position + (2 * direction))
 		left_hand_attack(atk_direction)
 	
+	if Input.is_action_just_pressed(btn_swap):
+		swap_weapon()
+	
+func swap_weapon():
+	if left_weapon == WEAPONS.dagger_1:
+		left_weapon = WEAPONS.rock
+		return
+	if left_weapon == WEAPONS.dagger_2:
+		left_weapon = WEAPONS.rock
+		return
+	if left_weapon ==  WEAPONS.rock:
+		left_weapon =  WEAPONS.arrow
+		return
+	if left_weapon ==  WEAPONS.arrow:
+		left_weapon =  WEAPONS.dagger_1
+		return
+	
 func ani_player():
 	ani_tree["parameters/Idle/blend_position"] = direction
 	ani_tree["parameters/Walk/blend_position"] = direction
 	ani_tree["parameters/Dead/blend_position"] = direction
-	ani_tree["parameters/Dagger/blend_position"] = direction
 	if is_stunned:
 		return
 	elif is_dead:
@@ -105,66 +129,45 @@ func ani_player():
 		set_para_ani(states.WALKING)
 		
 func set_para_ani(state: states):
+	ani_tree[ani.idle] = false # Idle
+	ani_tree[ani.walking] = false # Walk
+	ani_tree[ani.damaged] = false # Damaged
+	ani_tree[ani.dead] = false
+	%CollisionShape2D.disabled = false
 	match state:
 		states.IDLE:
-			ani_tree[ani[0]] = true # Idle
-			ani_tree[ani[1]] = false # Walk
-			ani_tree[ani[2]] = false # Damaged
-			ani_tree[ani[3]] = false # Dead
-			ani_tree[ani[4]] = false # Dagger
+			ani_tree[ani.idle] = true # Idle
 		states.WALKING:
-			ani_tree[ani[0]] = false
-			ani_tree[ani[1]] = true
-			ani_tree[ani[2]] = false
-			ani_tree[ani[3]] = false
-			ani_tree[ani[4]] = false 
+			ani_tree[ani.walking] = true
 		states.DAMAGED:
-			ani_tree[ani[0]] = false
-			ani_tree[ani[1]] = false
-			ani_tree[ani[2]] = true
-			ani_tree[ani[3]] = false
-			ani_tree[ani[4]] = false 
+			ani_tree[ani.damaged] = true 
 		states.DEAD:
-			ani_tree[ani[0]] = false
-			ani_tree[ani[1]] = false
-			ani_tree[ani[2]] = false
-			ani_tree[ani[3]] = true
-			ani_tree[ani[4]] = false 
+			ani_tree[ani.dead] = true
+			ani_tree[ani.idle] = false # Idle
+			ani_tree[ani.walking] = false # Walk
+			ani_tree[ani.damaged] = false # Damaged
+			%CollisionShape2D.disabled = true
 			speed = ghost_speed
-		states.DAGGER:
-			ani_tree[ani[0]] = false
-			ani_tree[ani[1]] = false
-			ani_tree[ani[2]] = false
-			ani_tree[ani[3]] = false
-			ani_tree[ani[4]] = true
 		
 func take_damage(damage : int, hit_stop: float, screw_state : float) -> void:
 	hit_stop(0.05, hit_stop)
 	health = health - damage
+	print(health)
 	
 func right_hand_attack(atk_direction):
 	if is_dead:
 		return
-	if ARROW:
-		throw(atk_direction, ARROW,  pixel_offset)
+	throw(atk_direction, right_weapon,  pixel_offset)
 
 func left_hand_attack(atk_direction):
 	if is_dead:
 		return
-	throw(atk_direction, DAGGER, 10)
+	throw(atk_direction, left_weapon, 10)
+	if left_weapon == WEAPONS.dagger_1:
+		left_weapon = WEAPONS.dagger_2
+	elif left_weapon == WEAPONS.dagger_2:
+		left_weapon = WEAPONS.dagger_1
 	
-func atk(weapon: weapons):
-	match weapon:
-		weapons.DAGGER:
-			is_dagger = 1
-			is_stunned = 1
-			set_para_ani(states.DAGGER)
-			await get_tree().create_timer(.6).timeout
-			is_dagger = 0
-			await get_tree().create_timer(.1).timeout
-			is_stunned = 0
-			
-
 func throw(throw_direction, item, offset):
 	var throwable = item.instantiate()
 	throwable.to_ignore = self

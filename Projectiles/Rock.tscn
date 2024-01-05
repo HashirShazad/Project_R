@@ -30,7 +30,6 @@ _data = {
 
 [node name="Rock" type="Area2D"]
 collision_layer = 32
-collision_mask = 0
 script = ExtResource("1_gvm7j")
 piercing = false
 damage = 10.0

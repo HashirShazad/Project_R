@@ -3426,6 +3426,7 @@ btn_left = &"P2_Left"
 btn_right = &"P2_Right"
 btn_r_atk = &"P2_R_Atk"
 btn_l_atk = &"P2_L_Atk"
+btn_swap = &"P2_Swap"
 
 [node name="Camera2D" type="Camera2D" parent="Node2D"]
 position = Vector2(500, 300)
