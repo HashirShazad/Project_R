@@ -47,6 +47,7 @@ rotation = 1.5708
 shape = SubResource("CircleShape2D_ggbum")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
+y_sort_enabled = true
 texture_filter = 1
 position = Vector2(0, -4.75)
 sprite_frames = SubResource("SpriteFrames_o2650")
