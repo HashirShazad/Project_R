@@ -1,114 +1,29 @@
-[gd_scene load_steps=8 format=3 uid="uid://bs0dngsiy24av"]
+[gd_scene load_steps=4 format=3 uid="uid://bs0dngsiy24av"]
 
-[ext_resource type="Texture2D" uid="uid://ndhv8pdsj7el" path="res://Weapons/Dagger/dagger.png" id="1_3rhrn"]
-[ext_resource type="Script" path="res://Scripts/Hitbox.gd" id="2_i6lj8"]
-[ext_resource type="Texture2D" uid="uid://cicqpcyl6g6ar" path="res://Weapons/Dagger/dagger_smear.png" id="3_1bgn6"]
+[ext_resource type="Script" path="res://Scripts/Weapon_HitBox.gd" id="1_vm4nd"]
+[ext_resource type="Texture2D" uid="uid://r2kaley2b01m" path="res://Weapons/Dagger/Dagger_Smear_Only.png" id="2_wo4xn"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_gvvv7"]
-radius = 3.0
-
-[sub_resource type="Animation" id="Animation_pp813"]
-resource_name = "Atk"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../CollisionShape2D:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("..:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [-0.785398, 0.0, 2.79253]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Smear:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("..:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, -12), Vector2(3, -6), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_u7wih"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -12)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_118qh"]
-_data = {
-"Atk": SubResource("Animation_pp813"),
-"RESET": SubResource("Animation_u7wih")
-}
+[sub_resource type="CircleShape2D" id="CircleShape2D_ggbum"]
+radius = 8.03508
 
 [node name="Dagger" type="Area2D"]
-position = Vector2(0, -12)
-rotation = -0.785398
-script = ExtResource("2_i6lj8")
-offset = 13
+y_sort_enabled = true
+position = Vector2(3, -6)
+script = ExtResource("1_vm4nd")
+knock_back_value = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2.38419e-07, -4)
-rotation = -0.811578
-shape = SubResource("CircleShape2D_gvvv7")
+position = Vector2(5, 2)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_ggbum")
 
-[node name="Dagger" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
 texture_filter = 1
-position = Vector2(0, -3)
-texture = ExtResource("1_3rhrn")
+position = Vector2(0, -4.75)
+texture = ExtResource("2_wo4xn")
 
-[node name="Smear" type="Sprite2D" parent="Dagger"]
-visible = false
-texture_filter = 1
-position = Vector2(-3.00159, -0.995204)
-rotation = -1.5786
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_1bgn6")
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Dagger")
-libraries = {
-"": SubResource("AnimationLibrary_118qh")
-}
-autoplay = "Atk"
-
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -3,6 +3,7 @@ class_name Player
 
 const ROCK : PackedScene = preload("res://Projectiles/Rock.tscn")
 const ARROW : PackedScene = preload("res://Projectiles/Arrow.tscn")
+const DAGGER : PackedScene = preload("res://Weapons/Dagger/dagger.tscn")
 
 @export var btn_up : StringName = "P1_Up"
 @export var btn_down : StringName  = "P1_Down"
@@ -14,6 +15,7 @@ const ARROW : PackedScene = preload("res://Projectiles/Arrow.tscn")
 var is_dead : bool = 0
 var is_dagger: bool = 0
 var is_stunned : bool = 0
+var is_invulnerable : bool = 0
 
 var pixel_offset = 20
 var walk_speed = 1.25
@@ -95,8 +97,6 @@ func ani_player():
 	ani_tree["parameters/Dagger/blend_position"] = direction
 	if is_stunned:
 		return
-	elif is_dagger:
-		set_para_ani(states.DAGGER)
 	elif is_dead:
 		set_para_ani(states.DEAD)
 	elif velocity == Vector2(0,0):
@@ -138,10 +138,10 @@ func set_para_ani(state: states):
 			ani_tree[ani[3]] = false
 			ani_tree[ani[4]] = true
 		
-func take_damage(damage : int, hit_stop: float) -> void:
+func take_damage(damage : int, hit_stop: float, screw_state : float) -> void:
 	hit_stop(0.05, hit_stop)
 	health = health - damage
-
+	
 func right_hand_attack(atk_direction):
 	if is_dead:
 		return
@@ -151,7 +151,7 @@ func right_hand_attack(atk_direction):
 func left_hand_attack(atk_direction):
 	if is_dead:
 		return
-	atk(weapons.DAGGER)
+	throw(atk_direction, DAGGER, 10)
 	
 func atk(weapon: weapons):
 	match weapon:
@@ -161,21 +161,26 @@ func atk(weapon: weapons):
 			set_para_ani(states.DAGGER)
 			await get_tree().create_timer(.6).timeout
 			is_dagger = 0
+			await get_tree().create_timer(.1).timeout
 			is_stunned = 0
-			pass
+			
+
 func throw(throw_direction, item, offset):
 	var throwable = item.instantiate()
+	throwable.to_ignore = self
 	get_tree().current_scene.add_child(throwable)
-	throwable.global_position = self.global_position + (offset * direction)
+	throwable.global_position = self.global_position + (0 * direction)
 	var throwable_rotation = throw_direction.angle()
 	throwable.rotation = throwable_rotation
 	is_stunned = true
-	await get_tree().create_timer(.1).timeout
+	await get_tree().create_timer(throwable.self_stun).timeout
 	is_stunned = false
 
-func recieve_knock_back(damage_source_pos : Vector2, value : int):
+func recieve_knock_back(damage_source_pos : Vector2, value : int, dir : Vector2):
+	if is_invulnerable:
+		return
 	if value != 0:
-		var knock_back_direction = damage_source_pos.direction_to(self.global_position)
+		var knock_back_direction = dir
 		var knock_back = value * knock_back_direction
 		velocity = knock_back
 		move_and_collide(velocity)
