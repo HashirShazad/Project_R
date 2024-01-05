@@ -1,10 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://bs0dngsiy24av"]
+[gd_scene load_steps=8 format=3 uid="uid://bs0dngsiy24av"]
 
 [ext_resource type="Script" path="res://Scripts/Weapon_HitBox.gd" id="1_vm4nd"]
-[ext_resource type="Texture2D" uid="uid://r2kaley2b01m" path="res://Weapons/Dagger/Dagger_Smear_Only.png" id="2_wo4xn"]
+[ext_resource type="Texture2D" uid="uid://oq6mq2tue8xr" path="res://Weapons/Weapons.png" id="2_yplrc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ggbum"]
 radius = 8.03508
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j56d8"]
+atlas = ExtResource("2_yplrc")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvn1l"]
+atlas = ExtResource("2_yplrc")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxwly"]
+atlas = ExtResource("2_yplrc")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o2650"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j56d8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvn1l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxwly")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
 
 [node name="Dagger" type="Area2D"]
 y_sort_enabled = true
@@ -17,10 +46,12 @@ position = Vector2(5, 2)
 rotation = 1.5708
 shape = SubResource("CircleShape2D_ggbum")
 
-[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
 texture_filter = 1
 position = Vector2(0, -4.75)
-texture = ExtResource("2_wo4xn")
+sprite_frames = SubResource("SpriteFrames_o2650")
+autoplay = "default"
+frame_progress = 0.502765
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
