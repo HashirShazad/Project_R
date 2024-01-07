@@ -6,6 +6,7 @@ class_name ProjectileHitBox
 func _process(delta):
 	direction = Vector2.RIGHT.rotated(rotation)
 	global_position += speed * direction * delta
+	$CollisionShape2D/Sprite2D.z_index = -1
 	
 func _init() -> void:
 	collision_layer = 32

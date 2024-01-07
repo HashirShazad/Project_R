@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cviol4u1n2gp3"]
+[gd_scene load_steps=9 format=3 uid="uid://cviol4u1n2gp3"]
 
 [ext_resource type="Script" path="res://Scripts/Weapon_HitBox.gd" id="1_co5uy"]
 [ext_resource type="Texture2D" uid="uid://oq6mq2tue8xr" path="res://Weapons/Weapons.png" id="2_7pm31"]
@@ -35,6 +35,10 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="Environment" id="Environment_v4v3t"]
+background_mode = 3
+glow_enabled = true
+
 [node name="Dagger" type="Area2D"]
 y_sort_enabled = true
 position = Vector2(3, -6)
@@ -51,15 +55,19 @@ rotation = 1.5708
 shape = SubResource("CircleShape2D_ggbum")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
+self_modulate = Color(0.7, 0.7, 0.7, 1)
 y_sort_enabled = true
 texture_filter = 1
 position = Vector2(7.2688e-06, 2)
 sprite_frames = SubResource("SpriteFrames_o2650")
 autoplay = "default"
-frame_progress = 0.34917
+frame_progress = 0.727578
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_v4v3t")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

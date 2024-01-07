@@ -152,7 +152,12 @@ func set_para_ani(state: states):
 func take_damage(damage : int, hit_stop: float, screw_state : float) -> void:
 	hit_stop(0.05, hit_stop)
 	health = health - damage
-	print(health)
+	$Hit_VFX.emitting = 1
+	%CollisionShape2D.disabled = 1
+	$Sprite2D.self_modulate = Color(1.5, 1.5, 1.5)
+	await get_tree().create_timer(screw_state).timeout
+	%CollisionShape2D.disabled = 0
+	$Sprite2D.self_modulate =  Color(1, 1, 1)
 	
 func right_hand_attack(atk_direction):
 	if is_dead:
@@ -188,7 +193,6 @@ func recieve_knock_back(damage_source_pos : Vector2, value : int, dir : Vector2)
 		velocity = knock_back
 		move_and_collide(velocity)
 		is_stunned = true
-		set_para_ani(states.DAMAGED)
 		await get_tree().create_timer(.4).timeout
 		set_para_ani(states.IDLE)
 		is_stunned = false
