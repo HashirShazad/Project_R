@@ -1,20 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://df86ocxkyyubi"]
+[gd_scene load_steps=2 format=3 uid="uid://df86ocxkyyubi"]
 
-[ext_resource type="Texture2D" uid="uid://b1c4i1nyh2mda" path="res://Inventory/item_slot_default_background.png" id="1_m68lm"]
-[ext_resource type="Script" path="res://Inventory/Slot_Poyo_Real.gd" id="1_skupe"]
+[ext_resource type="Script" path="res://Inventory/Slot.gd" id="1_hr5h1"]
 
 [node name="Slot" type="PanelContainer"]
-custom_minimum_size = Vector2(8, 8)
+clip_contents = true
+custom_minimum_size = Vector2(16, 16)
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_skupe")
+script = ExtResource("1_hr5h1")
 
 [node name="BG" type="TextureRect" parent="."]
+clip_children = 1
 texture_filter = 1
+clip_contents = true
 layout_mode = 2
-texture = ExtResource("1_m68lm")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+clip_contents = true
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
@@ -23,15 +25,21 @@ theme_override_constants/margin_bottom = 4
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 texture_filter = 1
+clip_contents = true
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Quantity Label" type="Label" parent="."]
 visible = false
+texture_filter = 1
+clip_contents = true
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1.5, 1.5, 1.5, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 3
-text = "x10
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 5
+text = "x1
 "

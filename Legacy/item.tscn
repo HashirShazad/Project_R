@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://dd2dlvgs3ie6j"]
 
-[ext_resource type="Script" path="res://Scripts/Item.gd" id="1_bkkbh"]
+[ext_resource type="Script" path="res://Scripts/Item.gd" id="1_1412m"]
 
 [node name="Item" type="Node2D"]
-script = ExtResource("1_bkkbh")
+script = ExtResource("1_1412m")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = 2

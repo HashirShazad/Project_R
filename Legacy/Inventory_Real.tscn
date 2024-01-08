@@ -1,0 +1,86 @@
+[gd_scene load_steps=4 format=3 uid="uid://bua4cbhqtv8oe"]
+
+[ext_resource type="PackedScene" uid="uid://j1obi34so" path="res://Legacy/Slot_Real.tscn" id="1_7dg45"]
+[ext_resource type="Texture2D" uid="uid://wnldv56ynbdi" path="res://Inventory/Tree Branch.png" id="2_a8215"]
+[ext_resource type="Script" path="res://passive_slot.gd" id="3_85346"]
+
+[node name="InventoryReal" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 4.0
+offset_top = 518.0
+offset_right = 176.0
+offset_bottom = 646.0
+columns = 4
+
+[node name="Slot" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="TextureRect" parent="GridContainer/Slot" index="0"]
+texture = ExtResource("2_a8215")
+
+[node name="Slot2" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Slot3" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Slot4" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Slot5" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Slot6" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Slot7" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Slot8" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Slot9" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Slot10" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Slot11" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Slot12" parent="GridContainer" instance=ExtResource("1_7dg45")]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Left" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 517.0
+offset_right = 240.0
+offset_bottom = 557.0
+script = ExtResource("3_85346")
+slot_type = 1
+
+[node name="Right" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 571.0
+offset_right = 242.0
+offset_bottom = 611.0
+script = ExtResource("3_85346")
+slot_type = 2
+
+[editable path="GridContainer/Slot"]

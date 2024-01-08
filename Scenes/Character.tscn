@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dsxkqnwwry57n" path="res://Characters/Ds/Fire.png" id="4_j5klm"]
 [ext_resource type="Texture2D" uid="uid://ya1yx33dccne" path="res://Characters/Ds/Sprite_Sheet.png" id="5_1peou"]
 [ext_resource type="Script" path="res://Scripts/HurtBox.gd" id="6_ellq2"]
-[ext_resource type="Script" path="res://Scenes/Inventory_Interface.gd" id="8_8c00w"]
-[ext_resource type="PackedScene" uid="uid://bv8gq4kqpp0b0" path="res://Inventory/Inventory_Poyo.tscn" id="9_c45et"]
+[ext_resource type="Script" path="res://Scripts/Inventory_Interface.gd" id="8_8c00w"]
+[ext_resource type="PackedScene" uid="uid://bv8gq4kqpp0b0" path="res://Inventory/Inventory.tscn" id="9_84cn1"]
 
 [sub_resource type="Curve" id="Curve_05slx"]
 _data = [Vector2(0.016129, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.274194, 0.758242), 0.0, 0.0, 0, 0, Vector2(0.478495, 0), 0.0, 0.0, 0, 0]
@@ -1109,17 +1109,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("8_8c00w")
 
-[node name="P_Inv" parent="Inventory_Interface" instance=ExtResource("9_c45et")]
+[node name="P_Inv" parent="Inventory_Interface" instance=ExtResource("9_84cn1")]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -19.0
-offset_top = -48.0
-offset_right = 21.0
-offset_bottom = -8.0
+offset_left = -8.0
+offset_top = -25.0
+offset_right = 8.0
+offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 0
 
