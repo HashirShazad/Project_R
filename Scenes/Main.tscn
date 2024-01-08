@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqtq8beg31vg0"]
+[gd_scene load_steps=9 format=3 uid="uid://bqtq8beg31vg0"]
 
 [ext_resource type="Texture2D" uid="uid://dsak8el7tg0w1" path="res://gfx/Overworld.png" id="1_mq1wt"]
-[ext_resource type="PackedScene" uid="uid://cva5hsb21d54f" path="res://Scenes/character.tscn" id="2_hpfrx"]
+[ext_resource type="Script" path="res://Scenes/Main.gd" id="1_oqocf"]
+[ext_resource type="PackedScene" uid="uid://cva5hsb21d54f" path="res://Scenes/Character.tscn" id="2_hpfrx"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="3_nf8gv"]
 [ext_resource type="PackedScene" uid="uid://bv8gq4kqpp0b0" path="res://Inventory/Inventory_Poyo.tscn" id="4_4hhi4"]
+[ext_resource type="Script" path="res://Scenes/Inventory_Interface.gd" id="5_sq1yf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nnh6r"]
 texture = ExtResource("1_mq1wt")
@@ -3393,6 +3395,7 @@ terrain_set_1/terrain_1/color = Color(0, 0.533333, 0.262745, 1)
 sources/0 = SubResource("TileSetAtlasSource_nnh6r")
 
 [node name="Main" type="Node"]
+script = ExtResource("1_oqocf")
 
 [node name="Node2D" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -3412,7 +3415,7 @@ layer_1/tile_data = PackedInt32Array(983058, 327680, 16, 1048598, 327680, 16, 10
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Node2D"]
 visible = false
-color = Color(0, 0, 0, 1)
+color = Color(0.6, 0.6, 0.6, 1)
 
 [node name="Character" parent="Node2D" instance=ExtResource("2_hpfrx")]
 unique_name_in_owner = true
@@ -3446,6 +3449,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("5_sq1yf")
 
 [node name="P1_Inv" parent="UI/Inventory_Interface" instance=ExtResource("4_4hhi4")]
 layout_mode = 1
@@ -3455,3 +3459,23 @@ anchor_bottom = 1.0
 offset_top = -40.0
 offset_bottom = 0.0
 grow_vertical = 0
+
+[node name="P2_Inv" parent="UI/Inventory_Interface" instance=ExtResource("4_4hhi4")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[connection signal="area_entered" from="Node2D/Character/Sprite2D/HurtBox" to="Node2D/Character/Sprite2D/HurtBox" method="area_entered"]
+[connection signal="area_entered" from="Node2D/Character2/Sprite2D/HurtBox" to="Node2D/Character2/Sprite2D/HurtBox" method="area_entered"]
+
+[editable path="Node2D/Character"]
+[editable path="Node2D/Character2"]

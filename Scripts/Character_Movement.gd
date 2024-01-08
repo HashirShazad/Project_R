@@ -1,13 +1,16 @@
 extends CharacterBody2D
 class_name Player
 
+
+
 var WEAPONS = {
 	rock  = preload("res://Projectiles/Rock.tscn"),
 	arrow = preload("res://Projectiles/Arrow.tscn"),
 	dagger_1 = preload("res://Weapons/Dagger/dagger_1.tscn"),
 	dagger_2 = preload("res://Weapons/Dagger/dagger_2.tscn")
 }
-
+@export var inventory_data: Inventory_Data
+# Buttons
 @export var btn_up : StringName = "P1_Up"
 @export var btn_down : StringName  = "P1_Down"
 @export var btn_left : StringName = "P1_Left"
@@ -17,7 +20,6 @@ var WEAPONS = {
 @export var btn_swap : StringName = "P1_Swap"
 
 var is_dead : bool = 0
-var is_dagger: bool = 0
 var is_stunned : bool = 0
 var is_invulnerable : bool = 0
 
@@ -35,7 +37,7 @@ var health : float
 var max_stamina : int = 30
 var stamina : float
 
-
+@onready var p_inv = $Inventory_Interface/P_Inv
 @onready var ani_tree = $AnimationTree
 enum states {IDLE, WALKING, DAMAGED, DEAD, DAGGER}
 var ani = {
@@ -99,8 +101,8 @@ func get_input():
 		left_hand_attack(atk_direction)
 	
 	if Input.is_action_just_pressed(btn_swap):
-		swap_weapon()
-	
+		
+		p_inv.visible = not p_inv.visible
 func swap_weapon():
 	if left_weapon == WEAPONS.dagger_1:
 		left_weapon = WEAPONS.rock

@@ -1,11 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://df86ocxkyyubi"]
+[gd_scene load_steps=3 format=3 uid="uid://df86ocxkyyubi"]
 
-[ext_resource type="Texture2D" uid="uid://bsoj2vo7ju2lc" path="res://Projectiles/Arrow.png" id="1_bmhyf"]
+[ext_resource type="Texture2D" uid="uid://b1c4i1nyh2mda" path="res://Inventory/item_slot_default_background.png" id="1_m68lm"]
+[ext_resource type="Script" path="res://Inventory/Slot_Poyo_Real.gd" id="1_skupe"]
 
 [node name="Slot" type="PanelContainer"]
 custom_minimum_size = Vector2(64, 64)
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_skupe")
+
+[node name="BG" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("1_m68lm")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -17,11 +24,11 @@ theme_override_constants/margin_bottom = 4
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("1_bmhyf")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Quantity Label" type="Label" parent="."]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
