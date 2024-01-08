@@ -20,3 +20,5 @@ func put_into_slot(new_item):
 	inventory_node.remove_child(item)
 	add_child(item)
 	
+func _get_drag_data(at_postition):
+	return 

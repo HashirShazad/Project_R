@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Item_Data" load_steps=3 format=3 uid="uid://4q7nqh7gtf8n"]
+
+[ext_resource type="Script" path="res://Inventory/Item_Data.gd" id="1_5xkl2"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4hcjh"]
+load_path = "res://.godot/imported/Arrow.png-76cc4d7fc5a46b66aaba72f6d17e5ead.ctex"
+
+[resource]
+script = ExtResource("1_5xkl2")
+name = "Arrow"
+description = "Can be used with a bow"
+stackable = true
+texture = SubResource("CompressedTexture2D_4hcjh")

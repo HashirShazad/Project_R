@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://j1obi34so"]
+
+[ext_resource type="Script" path="res://Scripts/Slot_Real.gd" id="1_enps6"]
+[ext_resource type="Texture2D" uid="uid://b1c4i1nyh2mda" path="res://Inventory/item_slot_default_background.png" id="2_o26s5"]
+[ext_resource type="Script" path="res://Scripts/Stats.gd" id="3_oq8kt"]
+
+[node name="Slot" type="PanelContainer"]
+texture_filter = 1
+script = ExtResource("1_enps6")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("2_o26s5")
+expand_mode = 1
+script = ExtResource("3_oq8kt")
