@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Inventory/Slot_Poyo_Real.gd" id="1_skupe"]
 
 [node name="Slot" type="PanelContainer"]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(8, 8)
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_skupe")
@@ -30,10 +30,8 @@ stretch_mode = 5
 [node name="Quantity Label" type="Label" parent="."]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
+size_flags_horizontal = 4
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 text = "x10
 "
-horizontal_alignment = 2
