@@ -3418,7 +3418,7 @@ color = Color(0.6, 0.6, 0.6, 1)
 [node name="Character" parent="Node2D" instance=ExtResource("2_hpfrx")]
 unique_name_in_owner = true
 z_as_relative = false
-position = Vector2(466, 238)
+position = Vector2(466, 219)
 
 [node name="Character2" parent="Node2D" instance=ExtResource("2_hpfrx")]
 unique_name_in_owner = true

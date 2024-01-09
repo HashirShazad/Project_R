@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://cva5hsb21d54f"]
+[gd_scene load_steps=81 format=3 uid="uid://cva5hsb21d54f"]
 
 [ext_resource type="Script" path="res://Scripts/Character_Movement.gd" id="1_l0kde"]
 [ext_resource type="Resource" uid="uid://g6fl6ibuhg35" path="res://Items/Inventory_Data/Inv_Data.tres" id="2_82dtx"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/HurtBox.gd" id="6_ellq2"]
 [ext_resource type="Script" path="res://Scripts/Inventory_Interface.gd" id="8_8c00w"]
 [ext_resource type="PackedScene" uid="uid://bv8gq4kqpp0b0" path="res://Inventory/Inventory.tscn" id="9_84cn1"]
+[ext_resource type="PackedScene" uid="uid://df86ocxkyyubi" path="res://Inventory/Slot.tscn" id="10_5mj3w"]
 
 [sub_resource type="Curve" id="Curve_05slx"]
 _data = [Vector2(0.016129, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.274194, 0.758242), 0.0, 0.0, 0, 0, Vector2(0.478495, 0), 0.0, 0.0, 0, 0]
@@ -1122,5 +1123,15 @@ offset_right = 8.0
 offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="Grabbed_Slot" parent="Inventory_Interface" instance=ExtResource("10_5mj3w")]
+visible = false
+modulate = Color(1, 1, 1, 0.396078)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = -9.0
+offset_top = -8.0
+offset_right = 11.0
+offset_bottom = 12.0
 
 [connection signal="area_entered" from="Sprite2D/HurtBox" to="Sprite2D/HurtBox" method="area_entered"]
