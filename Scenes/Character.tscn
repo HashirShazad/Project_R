@@ -392,7 +392,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_inwy6"]
 resource_name = "Roll"
-length = 0.2
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -400,10 +400,34 @@ tracks/0/path = NodePath("Sprite2D/HurtBox/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0.2, 0.971187),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [64, 67, 68, 69, 70, 71, 72, 73, 74, 75]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_2e8u6"]
@@ -858,7 +882,7 @@ blend_mode = 1
 animation = &"walk_left"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2i7wt"]
-animation = &"walk_right"
+animation = &"Roll"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6n7eq"]
 animation = &"walk_down"
@@ -956,7 +980,7 @@ states/Start/position = Vector2(-77, 90)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_kbn3b")
 states/Walk/position = Vector2(477, -108)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_j2o4m"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_hmh2f"), "Idle", "Damaged", SubResource("AnimationNodeStateMachineTransition_wn1ls"), "Walk", "End", SubResource("AnimationNodeStateMachineTransition_i384x"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_o7rak"), "Damaged", "Idle", SubResource("AnimationNodeStateMachineTransition_lrj4a"), "Idle", "Dead", SubResource("AnimationNodeStateMachineTransition_iv6kg"), "Dead", "Idle", SubResource("AnimationNodeStateMachineTransition_vtt01"), "Walk", "Dead", SubResource("AnimationNodeStateMachineTransition_u7hfv"), "Damaged", "Dead", SubResource("AnimationNodeStateMachineTransition_gi4lq"), "Walk", "Damaged", SubResource("AnimationNodeStateMachineTransition_juuuo"), "Damaged", "Walk", SubResource("AnimationNodeStateMachineTransition_5n2pn")]
-graph_offset = Vector2(49.729, 203)
+graph_offset = Vector2(-149.271, -138)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rjvcf"]
 size = Vector2(9.01241, 14)
@@ -972,6 +996,7 @@ script = ExtResource("1_l0kde")
 inventory_data = ExtResource("2_82dtx")
 
 [node name="Trail_VFX" type="CPUParticles2D" parent="."]
+visible = false
 texture_filter = 1
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_gsi7j")
@@ -990,6 +1015,7 @@ texture = ExtResource("3_10hrs")
 texture_scale = 5.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_tymbv")
 disabled = true
@@ -1076,18 +1102,18 @@ parameters/conditions/is_idle = false
 parameters/conditions/is_walking = false
 parameters/Dead/blend_position = Vector2(-0.506623, 0.031579)
 parameters/Idle/blend_position = Vector2(-0.987118, 0.78836)
-parameters/Walk/blend_position = Vector2(-0.9904, -0.999365)
+parameters/Walk/blend_position = Vector2(0.998221, 0.0373157)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -2)
 texture = ExtResource("5_1peou")
-flip_h = true
 hframes = 16
 vframes = 16
 frame = 4
 
 [node name="HurtBox" type="Area2D" parent="Sprite2D"]
+visible = false
 position = Vector2(-0.0165451, -2)
 rotation = -0.00137874
 script = ExtResource("6_ellq2")
