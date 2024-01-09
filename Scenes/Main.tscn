@@ -3438,8 +3438,5 @@ zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 script = ExtResource("3_nf8gv")
 
-[connection signal="area_entered" from="Node2D/Character/Sprite2D/HurtBox" to="Node2D/Character/Sprite2D/HurtBox" method="area_entered"]
-[connection signal="area_entered" from="Node2D/Character2/Sprite2D/HurtBox" to="Node2D/Character2/Sprite2D/HurtBox" method="area_entered"]
-
 [editable path="Node2D/Character"]
 [editable path="Node2D/Character2"]
