@@ -3435,7 +3435,6 @@ btn_swap = &"P2_Swap"
 [node name="Camera2D" type="Camera2D" parent="Node2D"]
 position = Vector2(500, 300)
 zoom = Vector2(4, 4)
-limit_smoothed = true
 position_smoothing_enabled = true
 script = ExtResource("3_nf8gv")
 

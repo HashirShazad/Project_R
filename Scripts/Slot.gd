@@ -1,5 +1,5 @@
 extends Panel
-var item_class = preload("res://Scenes/item.tscn")
+var item_class = preload("res://Legacy/item.tscn")# Changed
 var item = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
