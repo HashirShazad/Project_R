@@ -14,6 +14,10 @@ config/name="Project_R"
 run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 
+[dotnet]
+
+project/assembly_name="Project_R"
+
 [input]
 
 P1_Up={

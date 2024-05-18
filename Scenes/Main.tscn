@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dsak8el7tg0w1" path="res://gfx/Overworld.png" id="1_mq1wt"]
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_oqocf"]
-[ext_resource type="PackedScene" uid="uid://cva5hsb21d54f" path="res://Scenes/character.tscn" id="2_hpfrx"]
+[ext_resource type="PackedScene" uid="uid://cva5hsb21d54f" path="res://Scenes/Character.tscn" id="2_hpfrx"]
 [ext_resource type="Script" path="res://Scripts/Camera.gd" id="3_nf8gv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nnh6r"]
